@@ -1,0 +1,39 @@
+version: '3.8'
+services:
+  comiccalendar:
+    image: comiccalendar
+    build:
+      context: .
+      dockerfile: Dockerfile
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.comiccalendar.rule=Host(`yourdomain.com`)"
+      - "traefik.http.routers.comiccalendar.entrypoints=websecure"
+      - "traefik.http.routers.comiccalendar.tls.certresolver=myresolver"
+      - "traefik.http.services.comiccalendar.loadbalancer.server.port=8000"
+    networks:
+      - web
+
+  traefik:
+    image: traefik:v2.5
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
+      - "--certificatesresolvers.myresolver.acme.email=your-email@example.com"
+      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080" # Traefik dashboard
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "./letsencrypt:/letsencrypt"
+    networks:
+      - web
+
+networks:
+  web:
+    external: true

@@ -1,0 +1,146 @@
+[
+    {
+        "id": 1,
+        "summary": "Salón Manga de Alhaurín de la Torre",
+        "start_date": "2024-01-20",
+        "end_date": "2024-01-21",
+        "province": "Málaga",
+        "address": "Polideportivo El Limón, Alhaurín de la Torre (Málaga)",
+        "description": "Salon Manga"
+    },
+    {
+        "id": 2,
+        "summary": "3er Saló del Manga de Calella",
+        "start_date": "2024-02-03",
+        "end_date": "2024-02-04",
+        "province": "Barcelona",
+        "address": "Fàbrica Llobet, Calella (Barcelona)",
+        "description": "Salon Manga"
+    },
+    {
+        "id": 3,
+        "summary": "Japan Weekend Madrid",
+        "start_date": "2024-02-17",
+        "end_date": "2024-02-18",
+        "province": "Madrid",
+        "address": "IFEMA, Madrid",
+        "description": "Salon Manga"
+    },
+    {
+        "id": 4,
+        "summary": "Japan Weekend Bilbao",
+        "start_date": "2024-02-24",
+        "end_date": "2024-02-25",
+        "province": "Vizcaya",
+        "address": "Bilbao Exhibition Centre, Barakaldo (Vizkaia)",
+        "description": "Salon Manga"
+    },
+    {
+        "id": 5,
+        "summary": "27 Salón Manga de Jerez – Edición Invierno",
+        "start_date": "2024-02-24",
+        "end_date": "2024-02-25",
+        "province": "Cádiz",
+        "address": "IFECA (Institución Ferial de Cádiz), Jerez de la Frontera (Cádiz)",
+        "description": "Salon Manga"
+    },
+    {
+        "id": 6,
+        "summary": "Mangafest Mérida 2024",
+        "start_date": "2024-02-24",
+        "end_date": "2024-02-25",
+        "province": "None",
+        "address": "IFEME Institución Ferial de Mérida, Mérida",
+        "description": "Salon Manga"
+    },
+    {
+        "id": 7,
+        "summary": "Starraco Unlimited",
+        "start_date": "2024-02-24",
+        "end_date": "2024-02-25",
+        "province": "Tarragona",
+        "address": "Palau Firal i de Congressos de Tarragona, Tarragona",
+        "description": "Salon Comic"
+    },
+    {
+        "id": 8,
+        "summary": "Salón del Cómic de València 2024",
+        "start_date": "2024-03-01",
+        "end_date": "2024-03-03",
+        "province": "Valencia",
+        "address": "Feria València, Valencia",
+        "description": "Salon Comic"
+    },
+    {
+        "id": 9,
+        "summary": "GRAF Barcelona 2024",
+        "start_date": "2024-03-02",
+        "end_date": "2024-03-03",
+        "province": "Barcelona",
+        "address": "Fabra i Coats – Fàbrica de Creació, Barcelona",
+        "description": "Salon Comic"
+    },
+    {
+        "id": 10,
+        "summary": "Fanzimad 2024",
+        "start_date": "2024-03-08",
+        "end_date": "2024-03-10",
+        "province": "Madrid",
+        "address": "Biblioteca Iván de Vargas, Madrid",
+        "description": "Salon Comic"
+    },
+    {
+        "id": 11,
+        "summary": "42 Comic Barcelona",
+        "start_date": "2024-05-03",
+        "end_date": "2024-05-05",
+        "province": "Barcelona",
+        "address": "Fira Barcelona Montjuïc, Barcelona",
+        "description": "Salon Comic"
+    },
+    {
+        "id": 12,
+        "summary": "XII Festival de Cómic Europeo de Úbeda",
+        "start_date": "2024-05-09",
+        "end_date": "2024-05-12",
+        "province": "Jaén",
+        "address": "Sin ubicacion, Úbeda (Jaén)",
+        "description": "Salon Comic"
+    },
+    {
+        "id": 13,
+        "summary": "Viñetas desde o Atlantico 2024",
+        "start_date": "2024-08-12",
+        "end_date": "2024-08-18",
+        "province": "Coruña",
+        "address": "Sin ubicacion, A Coruña",
+        "description": "Salon Comic"
+    },
+    {
+        "id": 14,
+        "summary": "Splash Sagunt 2024",
+        "start_date": "2024-11-22",
+        "end_date": "2024-11-24",
+        "province": "Valencia",
+        "address": "Casal Jove Port de Sagunt, Port de Sagunt (Valencia)",
+        "description": "Salon Comic"
+    },
+    {
+        "id": 15,
+        "summary": "Salon comic Zaragoza",
+        "start_date": "2024-12-15",
+        "end_date": "2024-12-18",
+        "province": "Zaragoza",
+        "address": "Auditorio Zaragoza, Zaragoza",
+        "description": "Salon Comic"
+    },
+    {
+        "id": 16,
+        "summary": "Splash Sagunt 2024",
+        "start_date": "2024-11-22",
+        "end_date": "2024-11-24",
+        "province": "Valencia",
+        "address": "Casal Jove Port de Sagunt, Port de Sagunt (Valencia)",
+        "description": "Salon Comic"
+    }
+]
