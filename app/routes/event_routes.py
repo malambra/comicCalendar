@@ -7,22 +7,23 @@ from app.auth.auth import authenticate
 
 router = APIRouter()
 
-events = load_events()
-
 @router.get("/events/", response_model=List[Event], description="List events sorted by date.", tags=["events"])
 async def read_events(limit: int = Query(20, ge=1, le=100), offset: int = Query(0, ge=0)):
+    events = await load_events()
     sorted_events = sorted(events, key=lambda event: event.start_date)
     return sorted_events[offset : offset + limit]
 
 @router.get("/events/{event_id}", response_model=Event, description="Search event by id.", tags=["events"])
 async def read_event(event_id: int):
-    event = next((event for event in events if event["id"] == event_id), None)
+    events = await load_events()
+    event = next((event for event in events if event.id == event_id), None)
     if event is None:
         raise HTTPException(status_code=404, detail="Event not found")
     return event
 
 @router.get("/events/search/", response_model=List[Event], description="Search events by date and/or province. If no params are provided, the current month is used.", tags=["events"])
 async def search_events(date: str = None, province: str = None, limit: int = Query(20, ge=1, le=100), offset: int = Query(0, ge=0)):
+    events = await load_events()
     filtered_events = events
 
     if not date and not province:
