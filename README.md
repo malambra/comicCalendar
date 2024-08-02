@@ -36,7 +36,7 @@ docker run -d -p 8000:8000 comiccalendar
 
 #### Ejecute uvicorn server - Manualmente
 
-Lanzamiento manuel del servidor uvicorn.
+Lanzamiento manual del servidor uvicorn para ejecutar la api localmente.
 
 ```bash
 # Desde raiz del proyecto
@@ -54,6 +54,7 @@ comicCalendar/
 │   │   ├── event.py
 │   ├── routes/
 │   │   ├── __init__.py
+│   │   ├── auth_routes.py
 │   │   ├── event_routes.py
 │   ├── utils/
 │   │   ├── __init__.py
@@ -89,7 +90,8 @@ Directorio para los modelos de datos.
 Directorio para los enrutadores de la API.
 
 - **`__init__.py`**: Archivo para marcar el directorio como un paquete Python.
-- **`event_routes.py`**: Enrutador para las rutas relacionadas con eventos.
+- **`auth_routes.py`**: Enrutador para las rutas relacionadas con gestion eventos.
+- **`event_routes.py`**: Enrutador para las rutas relacionadas con queries sobre eventos.
 
 #### app/utils/
 Directorio para utilidades y funciones auxiliares.
