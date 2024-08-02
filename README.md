@@ -99,3 +99,18 @@ Directorio para utilidades y funciones auxiliares.
 
 ### events.json
 Archivo JSON para almacenar los datos de eventos.
+
+## Precarga de datos
+Actualmente he encontrado este calendario de google y estoy intentando contactar con algunos de los mantenedores por mail y telegram.
+```
+wget https://calendar.google.com/calendar/ical/8crhqvvts7t9ll97v62adearug%40group.calendar.google.com/public/basic.ics
+```
+
+Para hacer una precarga, dado este fichero puedes ejecutar el script adjunto **ics_to_json.py** que recorre el ics *ics_file = 'basic.ics'
+*, y lo convierte a json al formato esperado por la API.
+Además intenta hacer match en una lista con las 50 provincias, en caso de que esten en el texto del ics. Las que no esten o esten
+mal definidas apareceran como *Desconocida* y tendrás que adaptarlas a mano si quieres mostrar esta información.
+
+```bash
+python ics_to_json.py > events.json
+```

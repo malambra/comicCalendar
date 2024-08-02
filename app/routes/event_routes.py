@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, status, Depends
+from fastapi import APIRouter, HTTPException, status, Depends, Query
 from typing import List
 from app.utils.file_operations import load_events, save_events
 from app.models.events import Event, EventMod
@@ -9,38 +9,45 @@ router = APIRouter()
 events = load_events()
 
 @router.get("/events/", response_model=List[Event])
-async def read_events():
-    return events
+async def read_events(limit: int = Query(20, ge=1, le=100), offset: int = Query(0, ge=0)):
+    return events[offset : offset + limit]
+
+@router.get("/events/{event_id}", response_model=Event)
+async def read_event(event_id: int):
+    event = next((event for event in events if event["id"] == event_id), None)
+    if event is None:
+        raise HTTPException(status_code=404, detail="Event not found")
+    return event
 
 @router.get("/events/by_date/", response_model=List[Event])
-async def read_events_by_date(date: str):
+async def read_events_by_date(date: str, limit: int = Query(20, ge=1, le=100), offset: int = Query(0, ge=0)):
     filtered_events = [event for event in events if event.start_date <= date <= event.end_date]
     if not filtered_events:
         raise HTTPException(status_code=404, detail="No events found for this date")
-    return filtered_events
+    return filtered_events[offset : offset + limit]
 
 @router.get("/events/by_month/", response_model=List[Event])
-async def read_events_by_month(year: int, month: int):
+async def read_events_by_month(year: int, month: int, limit: int = Query(20, ge=1, le=100), offset: int = Query(0, ge=0)):
     month_str = f"{year}-{month:02d}"
     filtered_events = [event for event in events if month_str in event.start_date or month_str in event.end_date]
     if not filtered_events:
         raise HTTPException(status_code=404, detail="No events found for this month")
-    return filtered_events
+    return filtered_events[offset : offset + limit]
 
 @router.get("/events/by_province/", response_model=List[Event])
-async def read_events_by_province(province: str):
+async def read_events_by_province(province: str, limit: int = Query(20, ge=1, le=100), offset: int = Query(0, ge=0)):
     filtered_events = [event for event in events if province.lower() in event.province.lower()]
     if not filtered_events:
         raise HTTPException(status_code=404, detail="No events found for this province")
-    return filtered_events
+    return filtered_events[offset : offset + limit]
 
 @router.get("/events/by_province_and_month/", response_model=List[Event])
-async def read_events_by_province_and_date(province: str, year: int, month: int):
+async def read_events_by_province_and_date(province: str, year: int, month: int, limit: int = Query(20, ge=1, le=100), offset: int = Query(0, ge=0)):
     month_str = f"{year}-{month:02d}"
     filtered_events = [event for event in events if province.lower() in event.province.lower() and (month_str in event.start_date or month_str in event.end_date)]
     if not filtered_events:
         raise HTTPException(status_code=404, detail="No events found for this province and date")
-    return filtered_events
+    return filtered_events[offset : offset + limit]
 
 @router.put("/events/{event_id}/", response_model=Event, dependencies=[Depends(authenticate)])
 async def update_event(event_id: int, event_update: EventMod):
