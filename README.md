@@ -102,6 +102,41 @@ Directorio para utilidades y funciones auxiliares.
 ### events.json
 Archivo JSON para almacenar los datos de eventos.
 
+### Configuración de CORS
+Para el control de CORS, se usa la librería
+```python
+from fastapi.middleware.cors import CORSMiddleware
+```
+Como muestra la configuracion aplicada para desarrollo, podemos controlar los origenes, metodos y headers.
+
+```python
+## Lista de dominios permitidos
+#origins = [
+#    "http://localhost:3000",  # Ejemplo de dominio permitido
+#    "https://miapp.com",  # Añade aquí más dominios según sea necesario
+#]
+
+# Configuración de CORS 
+app.add_middleware(
+    CORSMiddleware,
+    #allow_origins=origins,  
+    allow_origins=["*"],  # Permite todos los orígenes
+    allow_credentials=True,
+    #allow_methods=["*"],  # Permite todos los métodos
+    allow_methods=["GET", "POST", "PUT", "DELETE"],
+    allow_headers=["*"],  # Permite todas las cabeceras
+)
+```
+Para verificar las cabeceras podemos realizar la siguiente petición
+
+```bash
+curl -i -H "Origin: http://example.com" http://localhost:8000/docs  
+```
+En la respuesta debemos encontrar la cabecera
+```
+access-control-allow-origin: *
+```
+
 ## Precarga de datos
 Actualmente he encontrado este calendario de google y estoy intentando contactar con algunos de los mantenedores por mail y telegram.
 ```
