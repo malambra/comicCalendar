@@ -54,7 +54,7 @@ async def create_event(event: EventMod):
     except Exception as e:
         print(f"Error al escribir en el archivo: {e}")
         events.remove(new_event)
-        raise
+        raise HTTPException(status_code=500, detail=f"Error al escribir en el archivo: {e}")
     return new_event
 
 @router.delete("/events/{event_id}", status_code=status.HTTP_204_NO_CONTENT, dependencies=[Depends(authenticate)], description="Delete event by id. Auth is required.", tags=["auth"])
