@@ -10,7 +10,7 @@ router = APIRouter()
 @router.get("/events/", response_model=List[Event], description="List events sorted by date.", tags=["events"])
 async def read_events(limit: int = Query(20, ge=1, le=100), offset: int = Query(0, ge=0)):
     events = await load_events()
-    sorted_events = sorted(events, key=lambda event: event.start_date)
+    sorted_events = sorted(events, key=lambda event: event.start_date, reverse=True)
     return sorted_events[offset : offset + limit]
 
 @router.get("/events/{event_id}", response_model=Event, description="Search event by id.", tags=["events"])
@@ -36,5 +36,5 @@ async def search_events(date: str = None, province: str = None, limit: int = Que
     if not filtered_events:
         raise HTTPException(status_code=404, detail="No events found for the given criteria")
     
-    sorted_events = sorted(filtered_events, key=lambda event: event.start_date)
+    sorted_events = sorted(filtered_events, key=lambda event: event.start_date, reverse=True)
     return sorted_events[offset : offset + limit]
