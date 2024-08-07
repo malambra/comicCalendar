@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Optional
+from typing import List, Optional
 
 class Event(BaseModel):
     id: int
@@ -17,3 +17,7 @@ class EventMod(BaseModel):
     province: Optional[str] = None
     address: Optional[str] = None
     description: Optional[str] = None
+
+class EventListResponse(BaseModel):
+    total: int
+    events: List[Event]
