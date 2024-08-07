@@ -5,7 +5,7 @@ from app.utils.file_operations import load_events, save_events
 from app.models.events import Event, EventMod, EventListResponse
 from app.auth.auth import authenticate 
 
-router = APIRouter()
+router = APIRouter(prefix="/v1")
 
 @router.get("/events/", response_model=EventListResponse, description="List events sorted by date.", tags=["events"])
 async def read_events(limit: int = Query(20, ge=1, le=100), offset: int = Query(0, ge=0)):
