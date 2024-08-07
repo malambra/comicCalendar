@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routes import event_routes, auth_routes
-
+from app.routes.v1 import event_routes as event_routes_v1
+from app.routes.v1 import auth_routes as auth_routes_v1
 
 app = FastAPI(
     title="Comic Calendar API",
@@ -28,11 +28,11 @@ app = FastAPI(
 app.add_middleware(
     CORSMiddleware,
     #allow_origins=origins,  
-    allow_origins=["*"],  # Permite todos los orígenes
+    allow_origins=["*"], 
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "DELETE"],
     allow_headers=["*"]
 )
 
-app.include_router(event_routes.router, tags=["events"])
-app.include_router(auth_routes.router, tags=["auth"])
+app.include_router(event_routes_v1.router, tags=["events"])
+app.include_router(auth_routes_v1.router, tags=["auth"])
