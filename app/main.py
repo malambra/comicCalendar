@@ -7,7 +7,7 @@ app = FastAPI(
     title="Comic Calendar API",
     description="API para gestionar eventos de cómics. Permite listar, buscar y actualizar eventos.",
     version="1.0.0",
-    #terms_of_service="http://comiccalendar.com/terms/",
+    terms_of_service="https://github.com/malambra/comicCalendar/blob/main/terms.md",
     contact={
         "name": "developer",
         "url": "https://github.com/malambra/comicCalendar",
