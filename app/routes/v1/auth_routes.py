@@ -5,7 +5,7 @@ from app.utils.file_operations import load_events, save_events
 from app.models.events import Event, EventMod
 from app.auth.auth import authenticate 
 
-router = APIRouter()
+router = APIRouter(prefix="/v1")
 
 @router.put("/events/{event_id}/", response_model=Event, dependencies=[Depends(authenticate)], description="update values of event. Auth is required.", tags=["auth"])
 async def update_event(event_id: int, event_update: EventMod):
