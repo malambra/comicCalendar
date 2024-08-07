@@ -6,7 +6,17 @@ from app.routes import event_routes, auth_routes
 app = FastAPI(
     title="Comic Calendar API",
     description="API para gestionar eventos de cómics. Permite listar, buscar y actualizar eventos.",
-    version="1.0.0"
+    version="1.0.0",
+    #terms_of_service="http://comiccalendar.com/terms/",
+    contact={
+        "name": "developer",
+        "url": "https://github.com/malambra/comicCalendar",
+        "email": "alambra.manolo@gmail.com"
+    },
+    license_info={
+        "name": "MIT",
+        "url": "https://opensource.org/licenses/MIT"
+    }
 )
 ## Lista de dominios permitidos
 #origins = [
@@ -20,9 +30,8 @@ app.add_middleware(
     #allow_origins=origins,  
     allow_origins=["*"],  # Permite todos los orígenes
     allow_credentials=True,
-    #allow_methods=["*"],  # Permite todos los métodos
     allow_methods=["GET", "POST", "PUT", "DELETE"],
-    allow_headers=["*"],  # Permite todas las cabeceras
+    allow_headers=["*"]
 )
 
 app.include_router(event_routes.router, tags=["events"])
