@@ -10,8 +10,12 @@ La **API** está disponible en: https://api.eventoscomic.com
 
 La **documentación de la API**: https://api.eventoscomic.com/docs
 
+Repo **Github**: https://github.com/malambra/comicCalendar
+
 #### FRONT
 El **front** está disponible en:  https://eventoscomic.es y https://eventoscomic.com
+
+Repo **Github**: https://github.com/Raixs/ComicCalendarWeb
 
 ## Características
 La **API** se auto explica en su [documentación](https://api.eventoscomic.com/docs)
