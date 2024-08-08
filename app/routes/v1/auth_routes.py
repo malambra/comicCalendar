@@ -1,6 +1,4 @@
-from fastapi import APIRouter, HTTPException, status, Depends, Query
-from typing import List
-from datetime import datetime
+from fastapi import APIRouter, HTTPException, status, Depends
 from app.utils.file_operations import load_events, save_events
 from app.models.events import Event, EventMod
 from app.auth.auth import authenticate 
