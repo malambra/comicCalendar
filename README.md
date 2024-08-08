@@ -221,50 +221,7 @@ access-control-allow-origin: *
 ```
 
 ## Contribuciones
-¡Toda ayuda será buen recibida!, así que si quieres contribuir:
-
-- Haz un **fork** del proyecto.
-
-- Crea una nueva rama. 
-```bash
-git switch -c "tu_rama"
-```
-
-- Realiza tus cambios y haz **add** y **commit**
-```bash
-git commit -am 'feat: Agrega nueva funcionalidad'
-```
-
-- Haz **push** de tus cambios.
-```bash
-git push origin tu_rama
-```
-
-- Abre un **Pull Request**.
-
-### Convención commits
-
-Podemos usar múltiples commits, aunque seguir algún convencionalismo siempre ayuda.
-
-Por ejemplo, el de [Angular](https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#-commit-message-guidelines)
-
-- **feat**: Una nueva característica para el usuario.
-
-- **fix**: Arregla un bug que afecta al usuario.
-
-- **perf**: Cambios que mejoran el rendimiento del sitio.
-
-- **build**: Cambios en el sistema de build, tareas de despliegue o instalación.
-
-- **ci**: Cambios en la integración continua.
-
-- **docs**: Cambios en la documentación.
-
-- **refactor**: Refactorización del código como cambios de nombre de variables o funciones.
-
-- **style**: Cambios de formato, tabulaciones, espacios o puntos y coma, etc; no afectan al usuario.
-
-- **test**: Añade tests o refactoriza uno existente.
+¡Toda ayuda será buen recibida!, así que si quieres contribuir, hazlo lo mas ordenado posible. [guía](CONTRIBUTING.md)
 
 ## Precarga de datos
 Actualmente he encontrado este [calendario](https://calendar.google.com/calendar/ical/8crhqvvts7t9ll97v62adearug%40group.calendar.google.com/public/basic.ics) de google, que esta siendo mantenido, en su mayoría por [emea75](https://www.instagram.com/emea75), lo que me ha permitido hacer una precarga de datos, para usarlos desde la **API**
