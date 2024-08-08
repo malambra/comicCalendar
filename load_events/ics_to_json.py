@@ -1,7 +1,6 @@
 import json
 from icalendar import Calendar
 import datetime  # Importar el módulo datetime
-import re
 
 # Lista de provincias españolas
 provincias = [

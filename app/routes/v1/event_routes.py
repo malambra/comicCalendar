@@ -1,9 +1,7 @@
-from fastapi import APIRouter, HTTPException, status, Depends, Query
-from typing import List, Optional
+from fastapi import APIRouter, HTTPException, Query
 from datetime import datetime
-from app.utils.file_operations import load_events, save_events
-from app.models.events import Event, EventMod, EventListResponse
-from app.auth.auth import authenticate 
+from app.utils.file_operations import load_events
+from app.models.events import Event, EventListResponse
 
 router = APIRouter(prefix="/v1")
 
