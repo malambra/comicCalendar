@@ -234,10 +234,16 @@ Actualmente he encontrado este [calendario](https://calendar.google.com/calendar
 python ics_to_json.py > events.json
 ```
 ## ToDo
-- [ &check; ] Añadir los eventos totales devueltos.
-- [ &check; ] Añadir versionado a la api.
-- [ ] Cambio del modelo de datos para incorporar comunidad, ciudad y tipo.
-- [ ] Activar compresion en la respuesta de la api
+- [ &check; ] (app) Añadir los eventos totales devueltos.
+- [ &check; ] (app) Añadir versionado a la api.
+- [ ] (app) Cambio del modelo de datos para incorporar comunidad, ciudad y tipo.
+- [ ] (app) Añadir capacidades de filtrado para nuevos campos.
+- [ ] (app) Normalizar fechas YYYY-MM-DD hh:mm:ss
+- [ ] (app) Activar compresion en la respuesta de la api
+- [ ] (app) Cambio autenticacion a OAuth2
+- [ ] (app) Control de edicion por Usuario y Evento
+- [ ] (infra) Automatizar mecanismos de obtencion y enriquecimiento de datos.
+- [ ] (infra) Uso de volumenes
 
 ## Agradecimientos
 ...
