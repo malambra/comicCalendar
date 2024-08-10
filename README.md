@@ -254,7 +254,7 @@ python ics_to_json.py > events.json
 - [ ] (app) Cambio del modelo de datos para incorporar comunidad, ciudad y tipo.
 - [ ] (app) Añadir capacidades de filtrado para nuevos campos.
 - [ ] (app) Normalizar fechas YYYY-MM-DD hh:mm:ss
-- [ ] (app) Activar compresion en la respuesta de la api
+- [ &check; ] (app) Activar compresion en la respuesta de la api
 - [ &check; ] (app) Cambio autenticacion a OAuth2
 - [ ] (app) Control de edicion por Usuario y Evento
 - [ ] (infra) Automatizar mecanismos de obtencion y enriquecimiento de datos.
