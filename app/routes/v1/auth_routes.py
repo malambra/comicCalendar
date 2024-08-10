@@ -3,7 +3,7 @@ from app.utils.file_operations import load_events, save_events
 from app.models.events import Event, EventMod
 from fastapi.security import OAuth2PasswordRequestForm
 from datetime import timedelta
-from app.models.users import User, Token
+from app.models.users import Token
 from app.auth.auth import authenticate_user, create_access_token, get_current_user, ACCESS_TOKEN_EXPIRE_MINUTES
 
 router = APIRouter(prefix="/v1")
