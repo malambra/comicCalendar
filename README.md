@@ -49,6 +49,19 @@ Las operaciones de creación, actualización o eliminación de eventos requieren
 ```bash
 htpasswd -c .htpasswd admin
 ```
+
+### Create  SECRET_KEY
+
+Para cifrar el token OAuth2 JWT es necesario generar una secret key en el fichero **.env** en la raiz del proyecto.
+```bash
+SECRET_KEY="xxxxxxxxxxxx....xxxxxxxxxxxxxxxx"
+```
+
+Para generarla de forma aleatoria podemos usar openssl
+```bash
+openssl rand -hex 32
+```
+
 ### Bulid docker image
 
 La imagen docker, con la **API** y el servidor **uvicorn**, se debe construir de la siguiente manera.
@@ -96,6 +109,7 @@ comicCalendar/
 │   ├── models/
 │   │   ├── __init__.py
 │   │   ├── event.py
+│   │   ├── users.py
 │   ├── auth/
 │   │   ├── __init__.py
 │   │   ├── auth.py
@@ -134,13 +148,14 @@ Directorio de la **API**
 Directorio para las funciones relacionadas con la autenticación.
 
 - **`__init__.py`**: Archivo para marcar el directorio como un paquete Python.
-- **`auth.py`**: Definición de la función de autenticación y de la ruta del fichero **.htpasswd** usado.
+- **`auth.py`**: Definición de la función de autenticación, de la ruta del fichero **.htpasswd** usado, de la creacion del token jwt y del algoritmo de cifrado usado.
 
 #### app/models/
 Directorio para los modelos de datos.
 
 - **`__init__.py`**: Archivo para marcar el directorio como un paquete Python.
 - **`events.py`**: Definición de los distintos modelos de datos para los eventos.
+- **`users.py`**: Definición de los distintos modelos de datos para la autenticacion de usuarios.
 
 #### app/routes/
 Directorio para los **enrutadores** de la **API**
@@ -240,7 +255,7 @@ python ics_to_json.py > events.json
 - [ ] (app) Añadir capacidades de filtrado para nuevos campos.
 - [ ] (app) Normalizar fechas YYYY-MM-DD hh:mm:ss
 - [ ] (app) Activar compresion en la respuesta de la api
-- [ ] (app) Cambio autenticacion a OAuth2
+- [ &check; ] (app) Cambio autenticacion a OAuth2
 - [ ] (app) Control de edicion por Usuario y Evento
 - [ ] (infra) Automatizar mecanismos de obtencion y enriquecimiento de datos.
 - [ ] (infra) Uso de volumenes
