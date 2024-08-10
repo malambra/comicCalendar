@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.gzip import GZipMiddleware
 from app.routes.v1 import event_routes as event_routes_v1
 from app.routes.v1 import auth_routes as auth_routes_v1
 
@@ -23,6 +24,9 @@ app = FastAPI(
 #    "http://localhost:3000",  # Ejemplo de dominio permitido
 #    "https://miapp.com",  # Añade aquí más dominios según sea necesario
 #]
+
+# Añadir GZipMiddleware con un nivel de compresión de 4
+app.add_middleware(GZipMiddleware, minimum_size=1000)
 
 # Configuración de CORS 
 app.add_middleware(
