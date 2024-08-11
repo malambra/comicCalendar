@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 from typing import List, Optional
 
+
 class Event(BaseModel):
     id: int
     summary: str
@@ -10,6 +11,7 @@ class Event(BaseModel):
     address: str
     description: str
 
+
 class EventMod(BaseModel):
     summary: Optional[str] = None
     start_date: Optional[str] = None
@@ -17,6 +19,7 @@ class EventMod(BaseModel):
     province: Optional[str] = None
     address: Optional[str] = None
     description: Optional[str] = None
+
 
 class EventListResponse(BaseModel):
     total: int

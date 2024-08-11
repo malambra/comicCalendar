@@ -12,30 +12,27 @@ app = FastAPI(
     contact={
         "name": "developer",
         "url": "https://github.com/malambra/comicCalendar",
-        "email": "alambra.manolo@gmail.com"
+        "email": "alambra.manolo@gmail.com",
     },
-    license_info={
-        "name": "MIT",
-        "url": "https://opensource.org/licenses/MIT"
-    }
+    license_info={"name": "MIT", "url": "https://opensource.org/licenses/MIT"},
 )
 ## Lista de dominios permitidos
-#origins = [
+# origins = [
 #    "http://localhost:3000",  # Ejemplo de dominio permitido
 #    "https://miapp.com",  # Añade aquí más dominios según sea necesario
-#]
+# ]
 
 # Añadir GZipMiddleware con un nivel de compresión de 4
 app.add_middleware(GZipMiddleware, minimum_size=1000)
 
-# Configuración de CORS 
+# Configuración de CORS
 app.add_middleware(
     CORSMiddleware,
-    #allow_origins=origins,  
-    allow_origins=["*"], 
+    # allow_origins=origins,
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "DELETE"],
-    allow_headers=["*"]
+    allow_headers=["*"],
 )
 
 app.include_router(event_routes_v1.router, tags=["events"])

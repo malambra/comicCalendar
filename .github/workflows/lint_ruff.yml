@@ -9,7 +9,7 @@ jobs:
     - uses: chartboost/ruff-action@v1
       with:
         version: 0.5.7
-        args: 'format --check -- --fix'
+        args: 'format --check'
         src: './app'
         changed-files: 'true'
     - uses: stefanzweifel/git-auto-commit-action@v4
