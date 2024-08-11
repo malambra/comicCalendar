@@ -103,6 +103,9 @@ uvicorn app.main:app --reload
 La **API**, tiene la siguiente estructura, con el fin de hacerla lo más *mantenible* y *escalable* posible
 ```
 comicCalendar/
+├── .github
+│   ├── workflows
+│   │   ├── lint_ruf.yml
 ├── app/
 │   ├── __init__.py
 │   ├── main.py
@@ -137,6 +140,11 @@ comicCalendar/
 
 ### comicCalendar/
 Directorio raíz del proyecto.
+
+#### .github/workflows
+Directorio para las actions
+
+- **`lint_ruff.yml`**: Action de linter con ruff, que es uno de los linters más rápidos actualmente.
 
 #### app/
 Directorio de la **API**
@@ -258,6 +266,7 @@ python ics_to_json.py > events.json
 - [ &check; ] (app) Cambio autenticacion a OAuth2
 - [ ] (app) Control de edicion por Usuario y Evento
 - [ ] (infra) Automatizar mecanismos de obtencion y enriquecimiento de datos.
+- [ &check; ] (infra) Añadida action linter con ruff.
 - [ ] (infra) Uso de volumenes
 
 ## Agradecimientos
