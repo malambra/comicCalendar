@@ -273,4 +273,4 @@ python ics_to_json.py > events.json
 ...
 
 ## Contexto
-Consulta los archivos [CONTRIBUTING.md](CONTRIBUTING.md), [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md), [LICENSE](LICENSE) y [TERMS](terms.md) para obtener más informacion acerca del proyecto.
+Consulta los archivos [CONTRIBUTING.md](CONTRIBUTING.md), [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md), [LICENSE](LICENSE) y [TERMS](TERMS.md) para obtener más informacion acerca del proyecto.
