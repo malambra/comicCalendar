@@ -59,6 +59,12 @@ async def update_event(event_id: int, event_update: EventMod):
         event.description = event_update.description
     if event_update.province is not None:
         event.province = event_update.province
+    if event_update.community is not None:
+        event.community = event_update.community
+    if event_update.city is not None:
+        event.city = event_update.city
+    if event_update.type is not None:
+        event.type = event_update.type
     if event_update.address is not None:
         event.address = event_update.address
     events[event_index] = event

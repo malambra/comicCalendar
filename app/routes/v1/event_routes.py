@@ -44,13 +44,16 @@ async def read_event(event_id: int):
 async def search_events(
     date: str = None,
     province: str = None,
+    community: str = None,
+    city: str = None,
+    type: str = None,
     limit: int = Query(20, ge=1, le=100),
     offset: int = Query(0, ge=0),
 ):
     events = await load_events()
     filtered_events = events
 
-    if not date and not province:
+    if not date and not (province or community or city or type):
         date = datetime.now().strftime("%Y-%m")
 
     if date:
@@ -65,6 +68,20 @@ async def search_events(
             event
             for event in filtered_events
             if province.lower() in event.province.lower()
+        ]
+    if community:
+        filtered_events = [
+            event
+            for event in filtered_events
+            if community.lower() in event.community.lower()
+        ]
+    if city:
+        filtered_events = [
+            event for event in filtered_events if city.lower() in event.city.lower()
+        ]
+    if type:
+        filtered_events = [
+            event for event in filtered_events if type.lower() in event.type.lower()
         ]
     if not filtered_events:
         raise HTTPException(
