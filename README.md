@@ -268,7 +268,7 @@ python ics_to_json.py > events.json
 - [ ] (app) Control de edicion por Usuario y Evento
 - [ ] (infra) Automatizar mecanismos de obtencion y enriquecimiento de datos.
 - [ &check; ] (infra) Añadida action linter con ruff.
-- [ ] (infra) Uso de volumenes
+- [ &check; ] (infra) Uso de volumenes para events.json
 
 ## Agradecimientos
 ...
