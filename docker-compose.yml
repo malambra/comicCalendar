@@ -11,7 +11,8 @@ services:
     networks:
       containers:
         ipv4_address: 172.21.0.10
-
+    volumes:
+      - ./events.json:/app/events.json
 networks:
   containers:
     external: true
