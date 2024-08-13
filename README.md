@@ -262,6 +262,7 @@ python ics_to_json.py > events.json
 - [ &check; ] (app) Cambio del modelo de datos para incorporar comunidad, ciudad y tipo.
 - [ &check; ] (app) Añadir capacidades de filtrado para nuevos campos.
 - [ &check; ] (app) Normalizar fechas YYYY-MM-DD hh:mm:ss
+- [ &check; ] (app) Normalizar Comunidades y Provincias segun INE
 - [ &check; ] (app) Activar compresion en la respuesta de la api
 - [ &check; ] (app) Cambio autenticacion a OAuth2
 - [ ] (app) Control de edicion por Usuario y Evento
