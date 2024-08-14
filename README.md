@@ -266,9 +266,15 @@ python ics_to_json.py > events.json
 - [ &check; ] (app) Activar compresion en la respuesta de la api
 - [ &check; ] (app) Cambio autenticacion a OAuth2
 - [ ] (app) Control de edicion por Usuario y Evento
+- [ ] (app) Control e entrada de provincias y comunidades con enums
+- [ &check; ] (app) Incrementar duracion token a 120min
+- [ ] (app) Mostrar fecha ultimo update en endpoint /events
+- [ ] (app) Gestion con bbdd en lugar de json
+- [ ] (app) No regenerar _id
 - [ ] (infra) Automatizar mecanismos de obtencion y enriquecimiento de datos.
 - [ &check; ] (infra) Añadida action linter con ruff.
 - [ &check; ] (infra) Uso de volumenes para events.json
+
 
 ## Agradecimientos
 ...
