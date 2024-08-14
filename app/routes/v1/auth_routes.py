@@ -2,12 +2,13 @@ from fastapi import APIRouter, HTTPException, status, Depends
 from app.utils.file_operations import load_events, save_events
 from app.models.events import Event, EventMod
 from fastapi.security import OAuth2PasswordRequestForm
-from datetime import timedelta
-from app.models.users import Token
+from datetime import timedelta, datetime
+from app.models.users import Token, TokenData
 from app.auth.auth import (
     authenticate_user,
     create_access_token,
     get_current_user,
+    verify_token,
     ACCESS_TOKEN_EXPIRE_MINUTES,
 )
 
@@ -28,6 +29,18 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
         data={"sub": user.username}, expires_delta=access_token_expires
     )
     return {"access_token": access_token, "token_type": "bearer"}
+
+
+@router.get("/token/validate", description="Validate if the token is still valid.")
+async def validate_token(token_data: TokenData = Depends(verify_token)):
+    expiration_time = datetime.utcfromtimestamp(token_data.expiration)
+    formatted_expiration = expiration_time.strftime("%Y-%m-%d %H:%M:%S")
+
+    return {
+        "message": "Token is valid",
+        "username": token_data.username,
+        "expires_at": formatted_expiration,
+    }
 
 
 @router.put(
@@ -68,14 +81,12 @@ async def update_event(event_id: int, event_update: EventMod):
     if event_update.address is not None:
         event.address = event_update.address
     events[event_index] = event
-
     try:
         await save_events(events)
     except Exception as e:
         raise HTTPException(
             status_code=500, detail=f"Error al escribir en el archivo: {e}"
         )
-
     return event
 
 
@@ -93,7 +104,6 @@ async def create_event(event: EventMod):
     event_data = event.dict()
     new_event = Event(id=new_event_id, **event_data)
     events.append(new_event)
-
     try:
         await save_events(events)
     except Exception as e:
@@ -124,7 +134,6 @@ async def delete_event(event_id: int):
 
     for index, event in enumerate(events):
         event.id = index + 1
-
     try:
         await save_events(events)
     except Exception as e:
