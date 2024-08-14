@@ -1,5 +1,6 @@
 from fastapi import APIRouter, HTTPException, status, Depends
 from app.utils.file_operations import load_events, save_events
+from app.utils.validate_data import validate_province_and_community
 from app.models.events import Event, EventMod
 from fastapi.security import OAuth2PasswordRequestForm
 from datetime import timedelta, datetime
@@ -15,7 +16,7 @@ from app.auth.auth import (
 router = APIRouter(prefix="/v1")
 
 
-@router.post("/token", response_model=Token)
+@router.post("/token", description="Create new token", response_model=Token)
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
     user = authenticate_user(form_data.username, form_data.password)
     if not user:
@@ -35,7 +36,6 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
 async def validate_token(token_data: TokenData = Depends(verify_token)):
     expiration_time = datetime.utcfromtimestamp(token_data.expiration)
     formatted_expiration = expiration_time.strftime("%Y-%m-%d %H:%M:%S")
-
     return {
         "message": "Token is valid",
         "username": token_data.username,
@@ -47,7 +47,7 @@ async def validate_token(token_data: TokenData = Depends(verify_token)):
     "/events/{event_id}/",
     response_model=Event,
     dependencies=[Depends(get_current_user)],
-    description="update values of event. Auth is required.",
+    description="Update values of event. Auth is required.",
     tags=["auth"],
 )
 async def update_event(event_id: int, event_update: EventMod):
@@ -57,11 +57,18 @@ async def update_event(event_id: int, event_update: EventMod):
         if event.id == event_id:
             event_index = index
             break
-
     if event_index is None:
         raise HTTPException(status_code=404, detail="Event not found")
-
     event = events[event_index]
+
+    # Validar la provincia y la comunidad (si se actualizan)
+    if event_update.province is not None and event_update.community is not None:
+        if not validate_province_and_community(event_update.province, event_update.community):
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="La provincia no pertenece a la comunidad autónoma proporcionada."
+            )
+
     if event_update.summary is not None:
         event.summary = event_update.summary
     if event_update.start_date is not None:
@@ -99,6 +106,12 @@ async def update_event(event_id: int, event_update: EventMod):
     tags=["auth"],
 )
 async def create_event(event: EventMod):
+    # Validar la provincia y la comunidad
+    if not validate_province_and_community(event.province, event.community):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="La provincia no pertenece a la comunidad autónoma proporcionada."
+        )
     events = await load_events()
     new_event_id = max(event.id for event in events) + 1 if events else 1
     event_data = event.dict()
