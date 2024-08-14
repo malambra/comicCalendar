@@ -1,8 +1,11 @@
 from fastapi import FastAPI
+from fastapi.responses import HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
 from app.routes.v1 import event_routes as event_routes_v1
 from app.routes.v1 import auth_routes as auth_routes_v1
+import textwrap
+
 
 app = FastAPI(
     title="Comic Calendar API",
@@ -34,6 +37,29 @@ app.add_middleware(
     allow_methods=["GET", "POST", "PUT", "DELETE"],
     allow_headers=["*"],
 )
+
+
+@app.get("/", include_in_schema=False, response_class=HTMLResponse)
+async def root():
+    message = """
+    <div style="text-align: center; font-family: Arial, sans-serif; color: #f5f5f5; background-color: #1a1a2e; padding: 20px; border-radius: 10px;">
+        <h2 style="color: #ffcc00;">Welcome to Comic Calendar API</h2>
+        <p>The default version is <strong>v1</strong></p>
+        <p>To read the documentation 
+            <a href="/docs" style="text-decoration: none; color: #ffcc00;">/docs</a>
+        </p>
+        <p>To access web 
+            <a href="https://eventoscomic.com" style="text-decoration: none; color: #ffcc00;">https://eventoscomic.com</a>
+        </p>
+        <br>
+        <a href="https://github.com/malambra/comicCalendar" target="_blank">
+        <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub" width="30" height="30" style="border-radius: 50%;"> 
+        </a>
+    </div>
+    """
+    formatted_message = textwrap.dedent(message).replace("\n", "<br>")
+    return formatted_message
+
 
 app.include_router(event_routes_v1.router, tags=["events"])
 app.include_router(auth_routes_v1.router, tags=["auth"])
