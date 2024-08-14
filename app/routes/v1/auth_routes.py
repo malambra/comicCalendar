@@ -63,10 +63,12 @@ async def update_event(event_id: int, event_update: EventMod):
 
     # Validar la provincia y la comunidad (si se actualizan)
     if event_update.province is not None and event_update.community is not None:
-        if not validate_province_and_community(event_update.province, event_update.community):
+        if not validate_province_and_community(
+            event_update.province, event_update.community
+        ):
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
-                detail="La provincia no pertenece a la comunidad autónoma proporcionada."
+                detail="La provincia no pertenece a la comunidad autónoma proporcionada.",
             )
 
     if event_update.summary is not None:
@@ -110,7 +112,7 @@ async def create_event(event: EventMod):
     if not validate_province_and_community(event.province, event.community):
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="La provincia no pertenece a la comunidad autónoma proporcionada."
+            detail="La provincia no pertenece a la comunidad autónoma proporcionada.",
         )
     events = await load_events()
     new_event_id = max(event.id for event in events) + 1 if events else 1
