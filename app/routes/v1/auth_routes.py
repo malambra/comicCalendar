@@ -115,7 +115,8 @@ async def create_event(event: EventMod):
             detail="La provincia no pertenece a la comunidad autónoma proporcionada.",
         )
     events = await load_events()
-    new_event_id = max(event.id for event in events) + 1 if events else 1
+    new_event_id = max((event.id for event in events), default=0) + 1
+
     event_data = event.dict()
     new_event = Event(id=new_event_id, **event_data)
     events.append(new_event)
@@ -142,16 +143,16 @@ async def delete_event(event_id: int):
     event_index = next(
         (index for index, event in enumerate(events) if event.id == event_id), None
     )
+
     if event_index is None:
         raise HTTPException(status_code=404, detail="Evento no encontrado")
 
     del events[event_index]
 
-    for index, event in enumerate(events):
-        event.id = index + 1
     try:
         await save_events(events)
     except Exception as e:
         raise HTTPException(
             status_code=500, detail=f"Error al escribir en el archivo: {e}"
         )
+    return {"message": "Evento eliminado con éxito"}
