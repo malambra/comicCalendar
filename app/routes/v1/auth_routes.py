@@ -8,11 +8,11 @@ from app.auth.auth import (
     authenticate_user,
     create_access_token,
     get_current_user,
+    verify_token,
     ACCESS_TOKEN_EXPIRE_MINUTES,
 )
 
 router = APIRouter(prefix="/v1")
-
 
 @router.post("/token", response_model=Token)
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
@@ -29,6 +29,9 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
     )
     return {"access_token": access_token, "token_type": "bearer"}
 
+@router.get("/token/validate", description="Validate if the token is still valid.")
+async def validate_token(token: str = Depends(verify_token)):
+    return {"message": "Token is valid"}
 
 @router.put(
     "/events/{event_id}/",
@@ -68,16 +71,13 @@ async def update_event(event_id: int, event_update: EventMod):
     if event_update.address is not None:
         event.address = event_update.address
     events[event_index] = event
-
     try:
         await save_events(events)
     except Exception as e:
         raise HTTPException(
             status_code=500, detail=f"Error al escribir en el archivo: {e}"
         )
-
     return event
-
 
 @router.post(
     "/events/",
@@ -93,7 +93,6 @@ async def create_event(event: EventMod):
     event_data = event.dict()
     new_event = Event(id=new_event_id, **event_data)
     events.append(new_event)
-
     try:
         await save_events(events)
     except Exception as e:
@@ -103,7 +102,6 @@ async def create_event(event: EventMod):
             status_code=500, detail=f"Error al escribir en el archivo: {e}"
         )
     return new_event
-
 
 @router.delete(
     "/events/{event_id}",
@@ -124,7 +122,6 @@ async def delete_event(event_id: int):
 
     for index, event in enumerate(events):
         event.id = index + 1
-
     try:
         await save_events(events)
     except Exception as e:
