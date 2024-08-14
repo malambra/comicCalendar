@@ -2,8 +2,8 @@ from fastapi import APIRouter, HTTPException, status, Depends
 from app.utils.file_operations import load_events, save_events
 from app.models.events import Event, EventMod
 from fastapi.security import OAuth2PasswordRequestForm
-from datetime import timedelta
-from app.models.users import Token
+from datetime import timedelta, datetime
+from app.models.users import Token, TokenData
 from app.auth.auth import (
     authenticate_user,
     create_access_token,
@@ -13,6 +13,7 @@ from app.auth.auth import (
 )
 
 router = APIRouter(prefix="/v1")
+
 
 @router.post("/token", response_model=Token)
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
@@ -29,9 +30,18 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
     )
     return {"access_token": access_token, "token_type": "bearer"}
 
+
 @router.get("/token/validate", description="Validate if the token is still valid.")
-async def validate_token(token: str = Depends(verify_token)):
-    return {"message": "Token is valid"}
+async def validate_token(token_data: TokenData = Depends(verify_token)):
+    expiration_time = datetime.utcfromtimestamp(token_data.expiration)
+    formatted_expiration = expiration_time.strftime("%Y-%m-%d %H:%M:%S")
+
+    return {
+        "message": "Token is valid",
+        "username": token_data.username,
+        "expires_at": formatted_expiration,
+    }
+
 
 @router.put(
     "/events/{event_id}/",
@@ -79,6 +89,7 @@ async def update_event(event_id: int, event_update: EventMod):
         )
     return event
 
+
 @router.post(
     "/events/",
     response_model=Event,
@@ -102,6 +113,7 @@ async def create_event(event: EventMod):
             status_code=500, detail=f"Error al escribir en el archivo: {e}"
         )
     return new_event
+
 
 @router.delete(
     "/events/{event_id}",
