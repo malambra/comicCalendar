@@ -3,15 +3,20 @@ import os
 import subprocess
 import sys
 import argparse
+from dotenv import load_dotenv
+
+# Cargar variables de entorno
+dotenv_path = os.path.join(os.path.dirname(__file__), '..', '.env')
+load_dotenv(dotenv_path)
 
 # URL del servidor y endpoint de autenticación
-server_url = 'http://localhost:8000/v1'
+server_url = os.getenv("SERVER_URL")
 auth_endpoint = f'{server_url}/token'
 events_endpoint = f'{server_url}/events/'
 
 # Credenciales autenticación
-username = 'admin'
-password = 'password'
+username = os.getenv("USER_API")
+password = os.getenv("PASSWORD_API")
 
 # Obtener el token de acceso
 def get_access_token():
