@@ -3,3 +3,8 @@ uvicorn==0.30.3
 pydantic==2.8.2
 passlib==1.7.4
 python-jose==3.3.0
+icalendar==5.0.13
+openai==0.28.0
+python-dotenv==1.0.1
+requests==2.31.0
+requests-oauthlib==2.0.0
