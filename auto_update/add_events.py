@@ -21,7 +21,11 @@ password = os.getenv("PASSWORD_API")
 # Obtener el token de acceso
 def get_access_token():
     response = subprocess.run(
-        ['curl', '-X', 'POST', auth_endpoint, '-d', f'username={username}&password={password}'],
+        [
+            'curl', '-X', 'POST', auth_endpoint,
+            '--data-urlencode', f'username={username}',
+            '--data-urlencode', f'password={password}'
+        ],
         capture_output=True,
         text=True
     )
