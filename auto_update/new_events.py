@@ -99,7 +99,7 @@ def main():
     #result = subprocess.run(['python3', 'ics_to_json.py', 'discrepant_events.ics'], capture_output=True, text=True)
     try:
         print("- Exporting new calendar from ics to json...")
-        result = subprocess.run(['python3.11', 'ics_to_json.py', 'discrepant_events.ics'], capture_output=True, text=True)
+        result = subprocess.run(['python3', 'ics_to_json.py', 'discrepant_events.ics'], capture_output=True, text=True)
         result.check_returncode()  # Esto lanzará una excepción si el comando falló
     except subprocess.CalledProcessError as e:
         print(f"- Error al ejecutar el script: {e}")
@@ -111,7 +111,7 @@ def main():
     #Normalizamos fechas
     try:
         print("- Normalize dates in new calendar...")
-        result = subprocess.run(['python3.11', 'enrich_dates.py', 'discrepant_events.json', 'discrepant_events_dates.json'], capture_output=True, text=True)
+        result = subprocess.run(['python3', 'enrich_dates.py', 'discrepant_events.json', 'discrepant_events_dates.json'], capture_output=True, text=True)
         result.check_returncode()  # Esto lanzará una excepción si el comando falló
     except subprocess.CalledProcessError as e:
         print(f"- Error al ejecutar el script: {e}")
@@ -123,7 +123,7 @@ def main():
     #IA Enrich de datos
     try:
         print("- Invoke IA to complete needed parans type, province, community and city...")
-        result = subprocess.run(['python3.11', 'enrich_ia.py', 'discrepant_events_dates.json', 'events_to_add.json'], capture_output=True, text=True)
+        result = subprocess.run(['python3', 'enrich_ia.py', 'discrepant_events_dates.json', 'events_to_add.json'], capture_output=True, text=True)
         result.check_returncode()  # Esto lanzará una excepción si el comando falló
     except subprocess.CalledProcessError as e:
         print(f"- Error al ejecutar el script: {e}")
@@ -135,7 +135,7 @@ def main():
     #Add new events
     try:
         print("- Invoke API to add new events...")
-        result = subprocess.run(['python3.11', 'add_events.py', 'events_to_add.json'], capture_output=True, text=True)
+        result = subprocess.run(['python3', 'add_events.py', 'events_to_add.json'], capture_output=True, text=True)
         result.check_returncode()  # Esto lanzará una excepción si el comando falló
     except subprocess.CalledProcessError as e:
         print(f"- Error al ejecutar el script: {e}")
