@@ -157,6 +157,16 @@ cython_debug/
 # Añadir htpasswd
 .htpasswd
 
+#Auto update
+auto_update/basic.ics
+auto_update/basicOLD.ics
+auto_update/discrepant_events.ics
+auto_update/discrepant_events.json
+auto_update/discrepant_events_dates.json
+auto_update/events_to_add.json
+events_20240818.json
+events.json
+
 # PyCharm
 #  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
 #  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
