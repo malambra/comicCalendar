@@ -270,6 +270,7 @@ python ics_to_json.py > events.json
 - [ &check; ] (app) Incrementar duracion token a 120min
 - [ ] (app) Mostrar fecha ultimo update en endpoint /events
 - [ ] (app) Gestion con bbdd en lugar de json
+- [ &check; ] (app) Graficado de información agregada de datos de eventos
 - [ &check; ] (app) No regenerar _id
 - [ &check; ] (infra) Automatizar mecanismos de obtencion y enriquecimiento de datos.
 - [ ] (infra) Gestion de backups.
