@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
+from fastapi.staticfiles import StaticFiles
 from app.routes.v1 import event_routes as event_routes_v1
 from app.routes.v1 import auth_routes as auth_routes_v1
 import textwrap
@@ -37,6 +38,8 @@ app.add_middleware(
     allow_methods=["GET", "POST", "PUT", "DELETE"],
     allow_headers=["*"],
 )
+
+app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
 
 @app.get("/", include_in_schema=False, response_class=HTMLResponse)
