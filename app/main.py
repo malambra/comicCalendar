@@ -41,6 +41,7 @@ app.add_middleware(
 
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
+
 @app.get("/", include_in_schema=False, response_class=HTMLResponse)
 async def root():
     message = """
