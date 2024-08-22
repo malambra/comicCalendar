@@ -264,6 +264,7 @@ python ics_to_json.py > events.json
 - [ &check; ] (app) Normalizar fechas YYYY-MM-DD hh:mm:ss
 - [ &check; ] (app) Normalizar Comunidades y Provincias segun INE
 - [ &check; ] (app) Activar compresion en la respuesta de la api
+- [ ] (app) Activar cache para las respuestas de la api
 - [ &check; ] (app) Cambio autenticacion a OAuth2
 - [ ] (app) Control de edicion por Usuario y Evento
 - [ &check; ] (app) Control e entrada de provincias y comunidades con enums
@@ -275,11 +276,23 @@ python ics_to_json.py > events.json
 - [ &check; ] (infra) Automatizar mecanismos de obtencion y enriquecimiento de datos.
 - [ ] (infra) Gestion de backups.
 - [ &check; ] (infra) Añadida action linter con ruff.
-- [ &check; ] (infra) Uso de volumenes para events.json
+- [ &check; ] (infra) Uso de volumenes para events.json, etc...
 
 
 ## Agradecimientos
-...
+
+- **Asociación de Autores de Cómic**: Agradecimientos especiales a la [Asociación de Autores de Cómic](https://www.autoresdecomic.com/) por proporcionar los datos utilizados en este proyecto. En particular a algunas de las personas que han nutrido de datos, el calendario usado...
+
+En especial a **dos de sus mantenedores**, con los que he podido hablar:
+- XXXXXXXX: [emea75](https://www.instagram.com/emea75)
+- Guillermo Velasco: [XXXX](https://instagram.com/XXXX)
+
+## Desarrolladores
+Proyecto desarrollado por:
+- Frontend [@raixs](https://github.com/Raixs)
+- Backend  [@malambra](https://github.com/malambra)
+- UX/UI [@hdetinta](https://github.com/hdetinta)
+
 
 ## Contexto
 Consulta los archivos [CONTRIBUTING.md](CONTRIBUTING.md), [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md), [LICENSE](LICENSE) y [TERMS](TERMS.md) para obtener más informacion acerca del proyecto.

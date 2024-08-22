@@ -3,8 +3,6 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-# C extensions
-*.so
 
 # Distribution / packaging
 .Python
@@ -157,19 +155,14 @@ cython_debug/
 # Añadir htpasswd
 .htpasswd
 
-#Auto update
-auto_update/basic.ics
-auto_update/basicOLD.ics
-auto_update/discrepant_events.ics
-auto_update/discrepant_events.json
-auto_update/discrepant_events_dates.json
-auto_update/events_to_add.json
-events_20240818.json
-events.json
+# Graficas
+/static/graphs/
 
-# PyCharm
-#  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
-#  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
-#  and can be added to the global gitignore or merged into this file.  For a more nuclear
-#  option (not recommended) you can uncomment the following to ignore the entire idea folder.
-#.idea/
+#Auto update
+**/basic.ics
+**/basicOLD.ics
+**/discrepant_events.ics
+**/discrepant_events.json
+**/discrepant_events_dates.json
+**/events_to_add.json
+**/events.json
