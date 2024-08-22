@@ -284,8 +284,8 @@ python ics_to_json.py > events.json
 - **Asociación de Autores de Cómic**: Agradecimientos especiales a la [Asociación de Autores de Cómic](https://www.autoresdecomic.com/) por proporcionar los datos utilizados en este proyecto. En particular a algunas de las personas que han nutrido de datos, el calendario usado...
 
 En especial a **dos de sus mantenedores**, con los que he podido hablar:
-- XXXXXXXX: [emea75](https://www.instagram.com/emea75)
-- Guillermo Velasco: [XXXX](https://instagram.com/XXXX)
+- Eme A: [emea75](https://www.instagram.com/emea75)
+- Guillermo Velasco: [@illustraworks](https://instagram.com/illustraworks)
 
 ## Desarrolladores
 Proyecto desarrollado por:
