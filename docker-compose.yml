@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.9'
 services:
   comiccalendar:
     container_name: comiccalendar
@@ -12,9 +12,10 @@ services:
       containers:
         ipv4_address: 172.21.0.10
     volumes:
-      - ./events.json:/app/events.json
-      - ./app/static:/app/app/static
-      - ./.htpasswd:/app/.htpasswd
+      - ./events.json:/code/events.json
+      - ./app/static:/code/app/static
+      - ./.htpasswd:/code/.htpasswd
+      - ./.env:/code/.env
 networks:
   containers:
     external: true
