@@ -42,7 +42,6 @@ async def read_event(event_id: int):
     tags=["events"],
 )
 async def search_events(
-    #    date: str = None,
     province: str = None,
     community: str = None,
     city: str = None,
@@ -55,16 +54,6 @@ async def search_events(
     events = await load_events()
     filtered_events = events
 
-    #    if not date and not (province or community or city or type):
-    #        date = datetime.now().strftime("%Y-%m")
-
-    #    if date:
-    #        filtered_events = [
-    #            event
-    #            for event in filtered_events
-    #            if event.start_date.startswith(f"{date}")
-    #            or event.end_date.startswith(f"{date}")
-    #        ]
     if start_date or end_date:
         if not start_date or not end_date:
             # Calcular las fechas mínimas y máximas de los eventos disponibles en caso de no recibir start_date o end_date
