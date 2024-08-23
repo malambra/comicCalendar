@@ -1,5 +1,8 @@
-from icalendar import Calendar, Event
-import copy, os, requests, subprocess
+from icalendar import Calendar
+import copy
+import os
+import requests
+import subprocess
 
 def load_calendar(file_path):
     with open(file_path, 'r') as file:

@@ -1,7 +1,6 @@
 import json
 import os
 import subprocess
-import sys
 import argparse
 from dotenv import load_dotenv
 
