@@ -12,9 +12,9 @@ from app.auth.auth import (
     verify_token,
     ACCESS_TOKEN_EXPIRE_MINUTES,
 )
+from app.utils.cache import get_cached_events, reload_cached_events  # Importar desde cache.py
 
 router = APIRouter(prefix="/v1")
-
 
 @router.post("/token", description="Create new token", response_model=Token)
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
@@ -92,6 +92,7 @@ async def update_event(event_id: int, event_update: EventMod):
     events[event_index] = event
     try:
         await save_events(events)
+        await reload_cached_events()  # Recargar los eventos en caché
     except Exception as e:
         raise HTTPException(
             status_code=500, detail=f"Error al escribir en el archivo: {e}"
@@ -122,6 +123,7 @@ async def create_event(event: EventMod):
     events.append(new_event)
     try:
         await save_events(events)
+        await reload_cached_events()  # Recargar los eventos en caché
     except Exception as e:
         print(f"Error al escribir en el archivo: {e}")
         events.remove(new_event)
@@ -151,6 +153,7 @@ async def delete_event(event_id: int):
 
     try:
         await save_events(events)
+        await reload_cached_events()  # Recargar los eventos en caché
     except Exception as e:
         raise HTTPException(
             status_code=500, detail=f"Error al escribir en el archivo: {e}"

@@ -2,9 +2,9 @@ from fastapi import APIRouter, HTTPException, Query
 from datetime import datetime
 from app.utils.file_operations import load_events
 from app.models.events import Event, EventListResponse
+from app.utils.cache import get_cached_events, reload_cached_events  # Importar desde cache.py
 
 router = APIRouter(prefix="/v1")
-
 
 @router.get(
     "/events/",
@@ -15,7 +15,7 @@ router = APIRouter(prefix="/v1")
 async def read_events(
     limit: int = Query(20, ge=1, le=100), offset: int = Query(0, ge=0)
 ):
-    events = await load_events()
+    events = await get_cached_events()
     sorted_events = sorted(events, key=lambda event: event.start_date, reverse=True)
     total_events = len(events)
     return {"total": total_events, "events": sorted_events[offset : offset + limit]}
@@ -28,7 +28,7 @@ async def read_events(
     tags=["events"],
 )
 async def read_event(event_id: int):
-    events = await load_events()
+    events = await get_cached_events()
     event = next((event for event in events if event.id == event_id), None)
     if event is None:
         raise HTTPException(status_code=404, detail="Event not found")
@@ -51,7 +51,7 @@ async def search_events(
     limit: int = Query(20, ge=1, le=100),
     offset: int = Query(0, ge=0),
 ):
-    events = await load_events()
+    events = await get_cached_events()
     filtered_events = events
 
     if start_date or end_date:
