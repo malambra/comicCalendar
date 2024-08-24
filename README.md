@@ -50,7 +50,15 @@ Las operaciones de creación, actualización o eliminación de eventos requieren
 htpasswd -c .htpasswd admin
 ```
 
-### Create  SECRET_KEY
+### Create  values .env
+
+```bash
+SECRET_KEY="..." # Secret para el cifrado del token JWT
+OPENAI_API_KEY="..."  # Reemplaza esto con tu clave de API de OpenAI para el enriquecimiento de eventos.
+USER_API="..." # Usuario con privilegios para poder crear eventos en el auto-update.
+PASSWORD_API="..." # Password para el usuario de la API.
+SERVER_URL="http://localhost:8000/v1"
+```
 
 Para cifrar el token OAuth2 JWT es necesario generar una secret key en el fichero **.env** en la raiz del proyecto.
 ```bash
@@ -103,37 +111,61 @@ uvicorn app.main:app --reload
 La **API**, tiene la siguiente estructura, con el fin de hacerla lo más *mantenible* y *escalable* posible
 ```
 comicCalendar/
+├── .env
+├── .htpasswd
+├── .gitignore
 ├── .github
 │   ├── workflows
 │   │   ├── lint_ruf.yml
-├── app/
-│   ├── __init__.py
-│   ├── main.py
-│   ├── models/
-│   │   ├── __init__.py
-│   │   ├── event.py
-│   │   ├── users.py
-│   ├── auth/
-│   │   ├── __init__.py
-│   │   ├── auth.py
-│   ├── routes/
-│   │   ├── __init__.py
-│   │   ├── v1
-│   │   │   ├── __init__.py
-│   │   │   ├── auth_routes.py
-│   │   │   ├── event_routes.py
-│   ├── utils/
-│   │   ├── __init__.py
-│   │   ├── file_operations.py
-├── events.json
-├── README.md
-├── requirements.txt
-├── LICENSE
+├── CODE_OF_CONDUCT.md
+├── CONTRIBUTING.md
 ├── Dockerfile
+├── LICENSE
+├── README.md
+├── TERMS.md
+├── app
+│   ├── __init__.py
+│   ├── auth
+│   │   ├── __init__.py
+│   │   └── auth.py
+│   ├── main.py
+│   ├── models
+│   │   ├── __init__.py
+│   │   ├── events.py
+│   │   └── users.py
+│   ├── routes
+│   │   ├── __init__.py
+│   │   └── v1
+│   │       ├── __init__.py
+│   │       ├── auth_routes.py
+│   │       └── event_routes.py
+│   ├── static
+│   │   └── graphs
+│   └── utils
+│       ├── __init__.py
+│       ├── file_operations.py
+│       └── validate_data.py
+├── auto_update
+│   ├── README.md
+│   ├── add_events.py
+│   ├── enrich_dates.py
+│   ├── enrich_ia.py
+│   ├── ics_to_json.py
+│   └── new_events.py
 ├── docker-compose.yml
+├── events.json
+├── generate_graphs
+│   ├── README.md
+│   ├── generate_data.py
+│   ├── generate_graf_totals_top.py
+│   └── generate_graf_year.py
 ├── load_events
-│   ├── basic.ics
-│   ├── ics_to_json.py
+│   ├── basic.ics
+│   ├── enrich_dates.py
+│   ├── enrich_ia.py
+│   ├── ics_to_json.py
+│   └── reasig_id.py
+└── requirements.txt
 ```
  
 ## Estructura del Proyecto
@@ -141,12 +173,36 @@ comicCalendar/
 ### comicCalendar/
 Directorio raíz del proyecto.
 
-#### .github/workflows
+### .env
+Variables de entorno necesarias.
+
+### .htpasswd
+Credenciales de usuarios con permisos de moificación, creación y eliminación de eventos.
+
+### .github/workflows
 Directorio para las actions
 
 - **`lint_ruff.yml`**: Action de linter con ruff, que es uno de los linters más rápidos actualmente.
 
-#### app/
+### CODE_OF_CONDUCT.md
+Codigo de conducta
+
+### CONTRIBUTING.md
+Normas para facilitar las contribuciones.
+
+### Dockerfile
+Definición de la imagen de la api.
+
+### LICENSE
+Definición de la licencia aplicada al proyecto.
+
+### README.md
+Información relevante del proyecto.
+
+### TERMS.md
+Terminos de uso de la API.
+
+### app/
 Directorio de la **API**
 
 - **`__init__.py`**: Archivo para marcar el directorio como un paquete Python.
@@ -181,37 +237,41 @@ Directorio para utilidades y funciones auxiliares.
 - **`__init__.py`**: Archivo para marcar el directorio como un paquete Python.
 - **`file_operations.py`**: Funciones para operaciones con archivos, como cargar y guardar eventos.
 
-### events.json
-Archivo JSON para almacenar los eventos.
+#### app/static/graphs
+Directorio para los html con las gráficas generadas.
 
-### LICENSE
-Licencia aplicada al proyecto.
+#### auto_update
+Directorio con los scripts necesarios para insertar y enriquecer los nuevos eventos generados en el calendario.
 
-### requirements.txt
-Definición de dependencias.
-
-### Dockerfile
-Definición de la imagen de la API.
+- **`README.md`**: Documentación acerca de la funcionalidad.
+- **`add_events.py`**: Script encargado de invocar a la API, para añadir los nuevos eventos.
+- **`enrich_dates.py`**: Script encargado de normalizar fechas para añadir la hora en caso de no estar disponible.
+- **`enrich_ia.py`**: Script encargado de enriquecer los eventos para definir el tipo, comunidad y provincia.
+- **`ics_to_json.py`**: Script encargado de convertir a json los calendarios ics.
+- **`new_events.py`**: Script encargado de la descarga del nuevo ics y la generacin uno nuevo con los nuevos eventos.
 
 ### docker-compose.yml
 Fichero de orquestacion par docker-compose.
 
-### .htpasswd
-Credenciales de usuarios con permisos de moificación, creación y eliminación de eventos.
+### events.json
+Archivo JSON para almacenar los eventos.
 
-### README.md
-Documentación del proyecto.
+### generate_graphs
+
+- **`README.md`**: Documentación acerca de la funcionalidad.
+- **`generate_data.py`**: Script para generar el json con los datos necesarios para la creacón de gráficas.
+- **`generate_graf_totals_top.py`**: Script para generar gráficas totales.
+- **`generate_graf_year.py`**: Script para generar gráficas de evoluciones anuales.
 
 ### load_events
-Directorio para realizar la precarga de datos.
+Directorio para realizar la precarga inicial de datos.
 
-### basic.ics
-Calendario de google con los datos iniciales.
+### requirements.txt
+Definición de dependencias.
 
-### ics_to_json.py
-Script python para la conversión de eventos de ics a json
 
-### Configuración de CORS
+
+## Configuración de CORS
 Para el control de CORS, se usa la librería
 ```python
 from fastapi.middleware.cors import CORSMiddleware
@@ -294,7 +354,6 @@ Proyecto desarrollado por:
 - Frontend [@raixs](https://github.com/Raixs)
 - Backend  [@malambra](https://github.com/malambra)
 - UX/UI [@hdetinta](https://github.com/hdetinta)
-
 
 ## Contexto
 Consulta los archivos [CONTRIBUTING.md](CONTRIBUTING.md), [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md), [LICENSE](LICENSE) y [TERMS](TERMS.md) para obtener más informacion acerca del proyecto.
