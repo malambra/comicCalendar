@@ -145,6 +145,7 @@ comicCalendar/
 │       ├── __init__.py
 │       ├── file_operations.py
 │       └── validate_data.py
+│       └── cache.py
 ├── auto_update
 │   ├── README.md
 │   ├── add_events.py
@@ -236,6 +237,7 @@ Directorio para utilidades y funciones auxiliares.
 
 - **`__init__.py`**: Archivo para marcar el directorio como un paquete Python.
 - **`file_operations.py`**: Funciones para operaciones con archivos, como cargar y guardar eventos.
+- **`cache.py`**: Funciones para carga de eventos en cache.
 
 #### app/static/graphs
 Directorio para los html con las gráficas generadas.
@@ -265,6 +267,9 @@ Archivo JSON para almacenar los eventos.
 
 ### load_events
 Directorio para realizar la precarga inicial de datos.
+
+## tests
+Directorio con las coberturas de tests unitarios usando pytest.
 
 ### requirements.txt
 Definición de dependencias.
@@ -306,6 +311,17 @@ En la respuesta debemos encontrar la cabecera:
 ```bash
 access-control-allow-origin: *
 ```
+## Tests - PyTests
+Para lanzar los tests definidos, debemos tener instaladas las siguientes dependencias:
+```bash
+ pip3.11 install pytest
+ pip3.11 install python-jose
+ pip3.11 install passlib
+```
+Para la ejecución de los tests, lanzaremos **pytest**
+```bash
+PYTHONPATH=./ pytest
+```
 
 ## Contribuciones
 ¡Toda ayuda será buen recibida!, así que si quieres contribuir, hazlo lo mas ordenado posible. [guía](CONTRIBUTING.md)
@@ -325,6 +341,8 @@ python ics_to_json.py > events.json
 - [ &check; ] (app) Normalizar Comunidades y Provincias segun INE
 - [ &check; ] (app) Activar compresion en la respuesta de la api
 - [ ] (app) Activar cache para las respuestas de la api
+- [ &check; ] (app) Activar cache para la carga de los eventos de events.json
+- [ &check; ] (app) Definicion de tests unitarios con pytest
 - [ &check; ] (app) Cambio autenticacion a OAuth2
 - [ ] (app) Control de edicion por Usuario y Evento
 - [ &check; ] (app) Control e entrada de provincias y comunidades con enums
