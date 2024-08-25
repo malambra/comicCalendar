@@ -42,6 +42,20 @@ Los requerimientos de la **API**, están definidos en el fichero requirements.
 ```bash
 pip install -r requirements.txt
 ```
+
+### Creation python Virtual env
+
+#### Crea venv
+```bash
+python3.11 -m venv .venv
+```
+
+#### Carga venv
+```bash
+source .venv/bin/activate
+```
+
+
 ### Create user
 
 Las operaciones de creación, actualización o eliminación de eventos requieren autenticación. Para lo que deberás crear uno o varios usuarios en un fichero **.htpasswd** en la raíz del proyecto.
