@@ -16,6 +16,7 @@ from app.utils.cache import reload_cached_events  # Importar desde cache.py
 
 router = APIRouter(prefix="/v1")
 
+
 @router.post("/token", description="Create new token", response_model=Token)
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
     user = authenticate_user(form_data.username, form_data.password)

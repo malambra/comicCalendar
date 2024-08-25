@@ -5,6 +5,7 @@ from app.utils.cache import get_cached_events  # Importar desde cache.py
 
 router = APIRouter(prefix="/v1")
 
+
 @router.get(
     "/events/",
     response_model=EventListResponse,
