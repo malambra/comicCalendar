@@ -12,7 +12,7 @@ from app.auth.auth import (
     verify_token,
     ACCESS_TOKEN_EXPIRE_MINUTES,
 )
-from app.utils.cache import get_cached_events, reload_cached_events  # Importar desde cache.py
+from app.utils.cache import reload_cached_events  # Importar desde cache.py
 
 router = APIRouter(prefix="/v1")
 

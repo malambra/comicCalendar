@@ -1,8 +1,7 @@
 from fastapi import APIRouter, HTTPException, Query
 from datetime import datetime
-from app.utils.file_operations import load_events
 from app.models.events import Event, EventListResponse
-from app.utils.cache import get_cached_events, reload_cached_events  # Importar desde cache.py
+from app.utils.cache import get_cached_events  # Importar desde cache.py
 
 router = APIRouter(prefix="/v1")
 
