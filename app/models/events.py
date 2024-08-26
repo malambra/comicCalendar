@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from typing import List, Optional
+from datetime import datetime
 
 
 class Event(BaseModel):
@@ -29,4 +30,5 @@ class EventMod(BaseModel):
 
 class EventListResponse(BaseModel):
     total: int
+    last_updated: datetime
     events: List[Event]
