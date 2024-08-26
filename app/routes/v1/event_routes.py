@@ -2,8 +2,13 @@ from fastapi import APIRouter, HTTPException, Query
 from datetime import datetime
 from app.models.events import Event, EventListResponse
 from app.utils.cache import get_cached_events  # Importar desde cache.py
+import os
 
 router = APIRouter(prefix="/v1")
+if os.path.exists("/code/events.json"):
+    events_file_path = "/code/events.json"
+else:  # Para correr los tests
+    events_file_path = "events.json"
 
 
 @router.get(
@@ -18,7 +23,13 @@ async def read_events(
     events = await get_cached_events()
     sorted_events = sorted(events, key=lambda event: event.start_date, reverse=True)
     total_events = len(events)
-    return {"total": total_events, "events": sorted_events[offset : offset + limit]}
+    modification_time = os.path.getmtime(events_file_path)
+    last_updated = datetime.utcfromtimestamp(modification_time).isoformat() + "Z"
+    return {
+        "total": total_events,
+        "last_updated": last_updated,
+        "events": sorted_events[offset : offset + limit],
+    }
 
 
 @router.get(
@@ -116,4 +127,10 @@ async def search_events(
         filtered_events, key=lambda event: event.start_date, reverse=True
     )
     total_events = len(filtered_events)
-    return {"total": total_events, "events": sorted_events[offset : offset + limit]}
+    modification_time = os.path.getmtime(events_file_path)
+    last_updated = datetime.utcfromtimestamp(modification_time).isoformat() + "Z"
+    return {
+        "total": total_events,
+        "last_updated": last_updated,
+        "events": sorted_events[offset : offset + limit],
+    }
