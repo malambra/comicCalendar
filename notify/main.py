@@ -287,6 +287,8 @@ async def help(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         "/start - Iniciar el bot y añadir nuevas preferencias.\n"
         "/check - Listar tus preferencias actuales.\n"
         "/delete - Eliminar una preferencia específica.\n"
+        "/clean - Eliminar todas tus preferencias.\n"
+        "/about - Mostrar información sobre el bot.\n"
         "/help - Mostrar este mensaje de ayuda.\n"
     )
     await update.message.reply_text(help_text)
@@ -312,7 +314,8 @@ async def clean(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 async def about(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     about_text = (
         "👤 **Autor**: Manuel Alambra [@malambra](https://github.com/malambra)\n"
-        "🔗 **Repositorio**: [GitHub](https://github.com/malambra/comicCalendar)\n"
+        "🔗 **Repositorio Backend**: [GitHub](https://github.com/malambra/comicCalendar)\n"
+        "🔗 **Repositorio Frontend**: [GitHub](https://github.com/Raixs/ComicCalendarWeb)\n"
         "🌐 **Web**: [https://eventoscomic.com](https://eventoscomic.com/)\n"
         "🌐 **API**: [https://api.eventoscomic.com/docs](https://api.eventoscomic.com/docs)\n"
     )
@@ -330,6 +333,7 @@ def main() -> None:
     application.add_handler(CommandHandler("check", check))
     application.add_handler(CommandHandler("delete", delete))
     application.add_handler(CommandHandler("clean", clean))
+    application.add_handler(CommandHandler("about", about))
     application.add_handler(CommandHandler("help", help))
     # Configurar el job para revisar eventos cada minuto
     job_queue = application.job_queue
