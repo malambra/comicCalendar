@@ -308,6 +308,16 @@ async def clean(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
     await update.message.reply_text("Todas tus preferencias han sido eliminadas.")
 
+# Función para manejar el comando /about
+async def about(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    about_text = (
+        "👤 **Autor**: Manuel Alambra [@malambra](https://github.com/malambra)\n"
+        "🔗 **Repositorio**: [GitHub](https://github.com/malambra/comicCalendar)\n"
+        "🌐 **Web**: [https://eventoscomic.com](https://eventoscomic.com/)\n"
+        "🌐 **API**: [https://api.eventoscomic.com/docs](https://api.eventoscomic.com/docs)\n"
+    )
+    await update.message.reply_text(about_text, parse_mode='Markdown')
+
 def main() -> None:
     telegram_token = os.getenv("TELEGRAM_TOKEN")
     if not telegram_token:
