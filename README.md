@@ -364,6 +364,7 @@ python ics_to_json.py > events.json
 - [ &check; ] (app) Mostrar fecha ultimo update en endpoint /events
 - [ &check; ] (app) Busqueda por rango de fechas
 - [ &check; ] (app) Uso de usuario no ROOT en dockerfile
+- [ &check; ] (app) Notificación de nuevos eventos via Telegram
 - [ ] (app) Gestion con bbdd en lugar de json
 - [ &check; ] (app) Graficado de información agregada de datos de eventos
 - [ &check; ] (app) No regenerar _id

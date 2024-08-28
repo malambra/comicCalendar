@@ -19,10 +19,22 @@ Cada intervalo de tiempo definido:
 
 ## QuickStart
 
+### Entorno local.
+
 Para lanzar el bot es necesario arrancar el proceso main.py
 ```bash
 python3 main.py
 ```
+
+### Producción
+
+El servicio se ha dockerizado para desplegarlo con el docker-compose general, por lo que bastará:
+```bash
+docker-compose build
+docker-compose up -d
+```
+
+Para levantar el container **notify**
 
 ## Acciones disponibles
 
@@ -39,5 +51,7 @@ Esta acción se puede lanzar tantas veces como se requiera para crear multiple s
 **/delete** : Con esta acción se lanza el mismo asistente que se usó para crear suscripciones, pero en este caso se eliminara la suscripción indicada.
 
 **/clean** : Con esta acción se eliminaran todas las suscripciones del usuario.
+
+**/about** : Con esta acción se obtiene informacion general.
 
 **/help** : Con esta accion se obtiene una ayuda de las acciones disponibles.
