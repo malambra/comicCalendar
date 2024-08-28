@@ -7,7 +7,7 @@ from telegram.ext import Application, CommandHandler, CallbackQueryHandler, Cont
 from dotenv import load_dotenv
 
 # Cargar variables de entorno
-dotenv_path = os.path.join(os.path.dirname(__file__), '..', '.env')
+dotenv_path = os.path.join(os.path.dirname(__file__), '.', '.env')
 load_dotenv(dotenv_path)
 
 # Configura Telegram
@@ -209,7 +209,7 @@ def save_preferences(preferences):
 # Función para revisar eventos y notificar a los usuarios
 async def check_events(context: ContextTypes.DEFAULT_TYPE) -> None:
     try:
-        with open('../auto_update/events_to_add.json', 'r') as file:
+        with open('./events_to_add.json', 'r') as file:
             events = json.load(file)
     except FileNotFoundError:
         events = []
@@ -224,15 +224,12 @@ async def check_events(context: ContextTypes.DEFAULT_TYPE) -> None:
     events_file_mod_time = datetime.fromtimestamp(os.path.getmtime('events_to_add.json')).isoformat()
 
     for user in users:
-        logger.info("Revisando eventos para %s...", user['chat_id'])
         if 'last_notification' not in user or events_file_mod_time > user['last_notification']:
             for event in events:
                 if 'summary' in event:
-                    logger.info("Evento: %s", event['summary'])
                 else:
                     logger.warning("Evento sin resumen encontrado: %s", event)
                     continue
-
                 if (user['event_type'] == 'todos' or user['event_type'] == event['type']) and \
                    (user['comunidad'] == 'todas' or user['comunidad'] == event['community']) and \
                    (user['provincia'] == 'todas' or user['provincia'] == event['province']):
@@ -311,6 +308,9 @@ async def clean(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     await update.message.reply_text("Todas tus preferencias han sido eliminadas.")
 
 def main() -> None:
+    telegram_token = os.getenv("TELEGRAM_TOKEN")
+    if not telegram_token:
+        raise ValueError("No se ha encontrado el token de Telegram en las variables de entorno")
     # Reemplaza 'YOUR' con el token de tu bot de Telegram
     application = Application.builder().token(telegram_token).build()
 
