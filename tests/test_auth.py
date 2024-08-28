@@ -2,7 +2,6 @@
 import os
 from datetime import datetime, timedelta
 from app.auth.auth import authenticate_user, create_access_token
-from app.models.users import User
 from passlib.apache import HtpasswdFile
 from jose import jwt
 
