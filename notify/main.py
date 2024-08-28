@@ -227,6 +227,7 @@ async def check_events(context: ContextTypes.DEFAULT_TYPE) -> None:
         if 'last_notification' not in user or events_file_mod_time > user['last_notification']:
             for event in events:
                 if 'summary' in event:
+                    logger.info("Evento: %s", event['summary'])
                 else:
                     logger.warning("Evento sin resumen encontrado: %s", event)
                     continue
