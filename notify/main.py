@@ -235,19 +235,19 @@ async def check_events(context: ContextTypes.DEFAULT_TYPE) -> None:
                    (user['comunidad'] == 'todas' or user['comunidad'] == event['community']) and \
                    (user['provincia'] == 'todas' or user['provincia'] == event['province']):
                     message = (
-                        "#######################################\n"
-                        f"Nuevo evento: {event['summary']}\n"
-                        f"Fecha de inicio: {event['start_date']}\n"
-                        f"Fecha de fin: {event['end_date']}\n"
-                        f"Provincia: {event['province']}\n"
-                        f"Dirección: {event['address']}\n"
-                        f"Descripción: {event['description']}\n"
-                        f"Comunidad: {event['community']}\n"
-                        f"Ciudad: {event['city']}\n"
-                        f"Tipo: {event['type']}\n"
-                        "#######################################"
+                        "##############################\n"
+                        f"🎭 **Nuevo evento**: {event['summary']}\n"
+                        f"📅 *Fecha de inicio*: {event['start_date']}\n"
+                        f"📅 *Fecha de fin*: {event['end_date']}\n"
+                        f"🌐 *Comunidad*: {event['community']}\n"
+                        f"🌐 *Provincia*: {event['province']}\n"
+                        f"🌐 *Ciudad*: {event['city']}\n"
+                        f"📍 *Dirección*: {event['address']}\n"
+                        f"ℹ️ *Descripción*: {event['description']}\n"
+                        f"🏷️ *Tipo*: {event['type']}\n"
+                        "##############################"
                     )
-                    await context.bot.send_message(chat_id=user['chat_id'], text=message)
+                    await context.bot.send_message(chat_id=user['chat_id'], text=message, parse_mode='Markdown')
                     logger.info("Nuevo evento para %s: %s", user['chat_id'], event['summary'])
 
             # Actualizar la fecha de la última notificación
@@ -321,6 +321,15 @@ async def about(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     )
     await update.message.reply_text(about_text, parse_mode='Markdown')
 
+# Función para establecer la descripción del bot
+async def set_bot_description(application) -> None:
+    description = (
+        "Este bot te notifica sobre los eventos en tu comunidad y provincia. "
+        "Usa /start para comenzar y seleccionar tus preferencias."
+        "Usa /help para ver una lista de comandos disponibles."
+    )
+    await application.bot.set_my_description(description)
+
 def main() -> None:
     telegram_token = os.getenv("TELEGRAM_TOKEN")
     if not telegram_token:
@@ -338,6 +347,9 @@ def main() -> None:
     # Configurar el job para revisar eventos cada minuto
     job_queue = application.job_queue
     job_queue.run_repeating(check_events, interval=int(telegram_timer), first=0)
+    
+    # Establecer la descripción del bot
+    application.job_queue.run_once(set_bot_description, 0)
 
     application.run_polling()
 
