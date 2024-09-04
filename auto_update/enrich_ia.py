@@ -4,6 +4,8 @@ import openai
 import argparse
 import time
 from dotenv import load_dotenv
+from app.utils.validate_data import provinces
+
 
 # Cargar variables de entorno
 dotenv_path = os.path.join(os.path.dirname(__file__), '..', '.env')
@@ -40,9 +42,12 @@ def get_type(description):
     return 'Desconocido'
 
 def get_location_info(address):
+    # Convertir la lista de provincias y comunidades a un formato JSON
+    provinces_json = json.dumps(provinces, ensure_ascii=False)
+
     messages = [
         {"role": "system", "content": "You are a helpful assistant."},
-        {"role": "user", "content": f"Determina la provincia, comunidad y ciudad del siguiente evento basado en su descripción:\n\n{address}\n\nProporciona el resultado en el formato JSON con los campos 'province', 'community' y 'city'."}
+        {"role": "user", "content": f"Determina la provincia, comunidad y ciudad del siguiente evento basado en su descripción:\n\n{address}\n\nUsa la siguiente lista de provincias y comunidades:\n\n{provinces_json}\n\nProporciona el resultado en el formato JSON con los campos 'province', 'community' y 'city'."}
     ]
 
     retries = 5
