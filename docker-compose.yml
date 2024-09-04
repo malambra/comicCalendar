@@ -12,7 +12,7 @@ services:
       containers:
         ipv4_address: 172.21.0.10
     volumes:
-      - ./comiccalendar-events:/code/events.json
+      - ./comiccalendar-events/events.json:/code/events.json
       - ./app/static:/code/app/static
       - ./.htpasswd:/code/.htpasswd
       - ./.env:/code/.env
