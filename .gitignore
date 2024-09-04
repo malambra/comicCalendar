@@ -166,3 +166,4 @@ cython_debug/
 **/discrepant_events_dates.json
 **/events_to_add.json
 **/events.json
+**/user_preferences.json
