@@ -1,9 +1,12 @@
 import os
+import sys
 import json
 import openai
 import argparse
 import time
 from dotenv import load_dotenv
+
+sys.path.append(os.path.abspath('../app/utils'))
 from app.utils.validate_data import provinces
 
 
