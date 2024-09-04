@@ -51,6 +51,7 @@ provinces = [
     {"name": "Zaragoza", "community": "Aragón"},
     {"name": "Ceuta", "community": "Ceuta"},
     {"name": "Melilla", "community": "Melilla"},
+    {"name": "Desconocida", "community": "Desconocida"},
 ]
 
 
