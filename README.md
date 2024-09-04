@@ -111,6 +111,13 @@ En el caso de usar docker-compose, la ejecución la realiza directamente, docker
  docker-compose up -d
  ```
 
+### Copiar Eventos al volumen.
+```bash
+docker cp ./events.json comiccalendar:/code/events.json
+```
+
+
+
 ### Ejecute uvicorn server - Manualmente
 
 Si durante la fase de desarrollo, te resulta más cómodo, levantar el servidor **uvicorn**, para que refresque los cambios sin construir la imagen, puedes lanzarlo de la siguiente manera.
