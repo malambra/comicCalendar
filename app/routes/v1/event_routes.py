@@ -114,7 +114,7 @@ async def search_events(
             if normalized_community in unidecode(event.community).lower()
         ]
     if city:
-        normalized_city = unidecode(community).lower()
+        normalized_city = unidecode(city).lower()
         filtered_events = [
             event
             for event in filtered_events
