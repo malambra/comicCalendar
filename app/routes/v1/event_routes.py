@@ -2,6 +2,7 @@ from fastapi import APIRouter, HTTPException, Query
 from datetime import datetime
 from app.models.events import Event, EventListResponse
 from app.utils.cache import get_cached_events  # Importar desde cache.py
+from unidecode import unidecode
 import os
 
 router = APIRouter(prefix="/v1")
@@ -99,20 +100,24 @@ async def search_events(
             <= end_date_dt
         ]
     if province:
+        normalized_province = unidecode(province).lower()
         filtered_events = [
             event
             for event in filtered_events
-            if province.lower() in event.province.lower()
+            if normalized_province in unidecode(event.province).lower()
         ]
     if community:
+        normalized_community = unidecode(community).lower()
         filtered_events = [
             event
             for event in filtered_events
-            if community.lower() in event.community.lower()
+            if normalized_community in unidecode(event.community).lower()
         ]
     if city:
+        normalized_city = unidecode(community).lower()
         filtered_events = [
-            event for event in filtered_events if city.lower() in event.city.lower()
+            event for event in filtered_events 
+            if normalized_city in unidecode(event.city).lower()
         ]
     if type:
         filtered_events = [
