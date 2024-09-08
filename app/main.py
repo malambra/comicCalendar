@@ -5,6 +5,7 @@ from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.staticfiles import StaticFiles
 from app.routes.v1 import event_routes as event_routes_v1
 from app.routes.v1 import auth_routes as auth_routes_v1
+from starlette.responses import FileResponse
 import textwrap
 
 
@@ -41,6 +42,10 @@ app.add_middleware(
 
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
+# Ruta para servir un solo fichero estático
+@app.get("/static-events", include_in_schema=False)
+async def static_file():
+    return FileResponse("events.json")
 
 @app.get("/", include_in_schema=False, response_class=HTMLResponse)
 async def root():
