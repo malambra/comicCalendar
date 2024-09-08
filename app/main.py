@@ -42,10 +42,12 @@ app.add_middleware(
 
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
+
 # Ruta para servir un solo fichero estático
 @app.get("/static-events", include_in_schema=False)
 async def static_file():
     return FileResponse("events.json")
+
 
 @app.get("/", include_in_schema=False, response_class=HTMLResponse)
 async def root():
