@@ -2,62 +2,21 @@ import json
 import argparse
 import os
 from icalendar import Calendar
-import datetime  # Importar el módulo datetime
+import datetime
+import pytz
 
 # Lista de provincias españolas
 provincias = [
-    "Álava",
-    "Albacete",
-    "Alicante",
-    "Almería",
-    "Asturias",
-    "Ávila",
-    "Badajoz",
-    "Baleares",
-    "Barcelona",
-    "Burgos",
-    "Cáceres",
-    "Cádiz",
-    "Cantabria",
-    "Castellón",
-    "Ciudad Real",
-    "Córdoba",
-    "Cuenca",
-    "Gerona",
-    "Granada",
-    "Guadalajara",
-    "Guipúzcoa",
-    "Huelva",
-    "Huesca",
-    "Jaén",
-    "La Coruña",
-    "La Rioja",
-    "Las Palmas",
-    "León",
-    "Lérida",
-    "Lugo",
-    "Madrid",
-    "Málaga",
-    "Murcia",
-    "Navarra",
-    "Orense",
-    "Palencia",
-    "Pontevedra",
-    "Salamanca",
-    "Segovia",
-    "Sevilla",
-    "Soria",
-    "Tarragona",
-    "Santa Cruz de Tenerife",
-    "Teruel",
-    "Toledo",
-    "Valencia",
-    "Valladolid",
-    "Vizcaya",
-    "Zamora",
-    "Zaragoza",
+    "Álava", "Albacete", "Alicante", "Almería", "Asturias", "Ávila", "Badajoz",
+    "Baleares", "Barcelona", "Burgos", "Cáceres", "Cádiz", "Cantabria", "Castellón",
+    "Ciudad Real", "Córdoba", "Cuenca", "Gerona", "Granada", "Guadalajara", "Guipúzcoa",
+    "Huelva", "Huesca", "Jaén", "La Coruña", "La Rioja", "Las Palmas", "León", "Lérida",
+    "Lugo", "Madrid", "Málaga", "Murcia", "Navarra", "Orense", "Palencia", "Pontevedra",
+    "Salamanca", "Segovia", "Sevilla", "Soria", "Tarragona", "Santa Cruz de Tenerife",
+    "Teruel", "Toledo", "Valencia", "Valladolid", "Vizcaya", "Zamora", "Zaragoza",
 ]
 
+madrid_tz = pytz.timezone('Europe/Madrid')
 
 def get_province(location):
     for province in provincias:
@@ -65,6 +24,16 @@ def get_province(location):
             return province
     return "Desconocida"
 
+def convert_to_madrid_tz(dt):
+    if isinstance(dt, datetime.date) and not isinstance(dt, datetime.datetime):
+        # Si es una fecha sin tiempo, asumir que es medianoche en UTC
+        dt = datetime.datetime.combine(dt, datetime.time.min)
+        dt = pytz.utc.localize(dt)
+    else:
+        # Asegurarse de que el datetime está en UTC
+        dt = dt.replace(tzinfo=pytz.utc)
+    # Convertir a la zona horaria de Madrid
+    return dt.astimezone(madrid_tz)
 
 def ics_to_json(ics_file):
     with open(ics_file, "r") as f:
@@ -80,22 +49,16 @@ def ics_to_json(ics_file):
             start_dt = component.get("dtstart").dt
             end_dt = component.get("dtend")
 
-            # Manejar tanto datetime.date como datetime.datetime
-            if isinstance(start_dt, datetime.date):
-                start_date = str(start_dt)
-            else:
-                start_date = str(start_dt.date())
+            # Convertir start_dt a la zona horaria de Madrid
+            start_dt = convert_to_madrid_tz(start_dt)
+            start_date = start_dt.strftime("%Y-%m-%d %H:%M:%S")
 
             if end_dt is not None:
-                end_dt = end_dt.dt
-                if isinstance(end_dt, datetime.date):
-                    end_date = str(end_dt)
-                else:
-                    end_date = str(end_dt.date())
+                # Convertir end_dt a la zona horaria de Madrid
+                end_dt = convert_to_madrid_tz(end_dt.dt)
+                end_date = end_dt.strftime("%Y-%m-%d %H:%M:%S")
             else:
-                end_date = (
-                    start_date  # Si no hay dtend, usar la misma fecha que dtstart
-                )
+                end_date = start_date  # Si no hay dtend, usar la misma fecha que dtstart
 
             location = str(component.get("location"))
             description = str(component.get("description"))
