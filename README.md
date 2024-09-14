@@ -1,21 +1,24 @@
 # comicCalendar
+## Qué es...
 comicCalendar, es una **api** desarrollada con FastAPI, para gestionar eventos relacionados con el mundo del cómic.
 
-El proyecto nace de la necesidad de un "friki" de tener un punto centralizado en el que poder consultar los eventos por distintos campos, fecha, provincia, etc. y estar informado de que me interesa visitar.
+El proyecto nace de la necesidad de un "friki", de tener un punto centralizado en el que poder consultar los eventos por distintos campos... fecha, provincia, etc. y estar informado de lo que me interesa visitar.
 
-Si tienes esta misma necesidad, aparte de ser otro "friki", eres libre de usar el código o el servicio como consideres, dentro de los términos publicados en [términos](terms.md)
+Si tienes esta misma necesidad, aparte de ser otro "friki", eres libre de usar el código o la **API** como consideres, dentro de los términos publicados en [términos](terms.md)
+
+Si quieres disfrutar de tus eventos sin complicarte, te sigiero que uses la web de [https://eventoscomic.com](https://eventoscomic.com)
 
 #### API
-La **API** está disponible en: https://api.eventoscomic.com
+- URL de la **API** está disponible en: https://api.eventoscomic.com
 
-La **documentación de la API**: https://api.eventoscomic.com/docs
+- Documentación de la **API**: https://api.eventoscomic.com/docs
 
-Repo **Github**: https://github.com/malambra/comicCalendar
+- Repositorio **Github**: https://github.com/malambra/comicCalendar
 
 #### FRONT
-El **front** está disponible en:  https://eventoscomic.com
+- URL en producción:  https://eventoscomic.com
 
-Repo **Github**: https://github.com/Raixs/ComicCalendarWeb
+- Repositorio **Github**: https://github.com/Raixs/ComicCalendarWeb
 
 ## Características
 La **API** se auto explica en su [documentación](https://api.eventoscomic.com/docs)
@@ -32,8 +35,65 @@ Las funcionalidades más destacadas son:
     - Titulo ( String contenido en el titulo )
 
 ## QuickStart
+Para ejecutar el proyecto basta con:
 
-Para desplegar el proyecto de forma local, puedes seguir los siguientes pasos...
+- Clona el proyecto
+
+```bash
+git clone git@github.com:malambra/comicCalendar.git
+```
+
+- Creación de usuario.
+
+Las operaciones de creación, actualización o eliminación de eventos requieren autenticación. Para lo que deberás crear uno o varios usuarios en un fichero **.htpasswd** en la raíz del proyecto.
+
+```bash
+htpasswd -c .htpasswd admin
+```
+
+- Creación de fichero de variables .env
+
+Creamos el fichero .env
+```bash
+vim .env
+```
+
+Creamos un valor random para el SECRET_JWT
+```bash
+openssl rand -hex 32
+```
+
+Con el siguiente contenido, adaptando nuestros valores.
+```bash
+#JWT
+SECRET_KEY="xxxxxx"
+
+#OPENAI
+OPENAI_API_KEY="sk-xxx"
+
+#Add events
+USER_API="HTPASSWD_USER"
+PASSWORD_API="HTPASSWD_PASSWORD"
+SERVER_URL="http://localhost:8000/v1"
+
+#Notify Telegram
+TELEGRAM_TOKEN=xxxxxxx
+TELEGRAM_TIMER_SECONDS=30
+```
+
+- Construimos y arrancamos el proyecto.
+```bash
+docker-compose build
+docker-compose up -d
+```
+
+- Copiamos el fichero de eventos al volumen.
+```bash
+docker cp ./events.json comiccalendar:/code/events.json
+```
+
+## Entorno de desarrollo
+Aquí dejo algunos tips para desplegar el proyecto de forma local, de cara ha realizar futuros desarrllos...
 
 ### Install requirements
 
@@ -44,6 +104,7 @@ pip install -r requirements.txt
 ```
 
 ### Creation python Virtual env
+Es recomendable crear un virtualEnv sobre el que trabajar.
 
 #### Crea venv
 ```bash
@@ -54,37 +115,8 @@ python3.11 -m venv .venv
 ```bash
 source .venv/bin/activate
 ```
-
-
-### Create user
-
-Las operaciones de creación, actualización o eliminación de eventos requieren autenticación. Para lo que deberás crear uno o varios usuarios en un fichero **.htpasswd** en la raíz del proyecto.
-
-```bash
-htpasswd -c .htpasswd admin
-```
-
-### Create  values .env
-
-```bash
-SECRET_KEY="..." # Secret para el cifrado del token JWT
-OPENAI_API_KEY="..."  # Reemplaza esto con tu clave de API de OpenAI para el enriquecimiento de eventos.
-USER_API="..." # Usuario con privilegios para poder crear eventos en el auto-update.
-PASSWORD_API="..." # Password para el usuario de la API.
-SERVER_URL="http://localhost:8000/v1"
-```
-
-Para cifrar el token OAuth2 JWT es necesario generar una secret key en el fichero **.env** en la raiz del proyecto.
-```bash
-SECRET_KEY="xxxxxxxxxxxx....xxxxxxxxxxxxxxxx"
-```
-
-Para generarla de forma aleatoria podemos usar openssl
-```bash
-openssl rand -hex 32
-```
-
-### Bulid docker image
+### Docker Image
+#### Bulid docker image
 
 La imagen docker, con la **API** y el servidor **uvicorn**, se debe construir de la siguiente manera.
 
@@ -92,31 +124,13 @@ La imagen docker, con la **API** y el servidor **uvicorn**, se debe construir de
 docker build -t comiccalendar .
 ```
 
-En el caso de usar docker-compose, debes adaptar el fichero docker-compose.yml y construir la imagen desde el.
-
-```bash
-docker-compose build
-```
-
-### Run docker image
+#### Run docker image
 
 El contenedor docker, con la API y el servidor uvicorn, se debe ejecutar de la siguiente manera.
 
 ```bash
 docker run -d -p 8000:8000 comiccalendar
 ```
-En el caso de usar docker-compose, la ejecución la realiza directamente, docker-compose.
-
-```bash
- docker-compose up -d
- ```
-
-### Copiar Eventos al volumen.
-```bash
-docker cp ./events.json comiccalendar:/code/events.json
-```
-
-
 
 ### Ejecute uvicorn server - Manualmente
 
@@ -353,6 +367,7 @@ Actualmente he encontrado este [calendario](https://calendar.google.com/calendar
 ```bash
 python ics_to_json.py > events.json
 ```
+
 ## ToDo
 - [ &check; ] (app) Añadir los eventos totales devueltos.
 - [ &check; ] (app) Añadir versionado a la api.
@@ -383,7 +398,7 @@ python ics_to_json.py > events.json
 
 ## Agradecimientos
 
-- **Asociación de Autores de Cómic**: Agradecimientos especiales a la [Asociación de Autores de Cómic](https://www.autoresdecomic.com/) por proporcionar los datos utilizados en este proyecto. En particular a algunas de las personas que han nutrido de datos, el calendario usado...
+A los creadores y mantenedores, del calendario de eventos, del que he obtenido los datos para la precarga.
 
 En especial a **dos de sus mantenedores**, con los que he podido hablar:
 - Eme A: [emea75](https://www.instagram.com/emea75)
