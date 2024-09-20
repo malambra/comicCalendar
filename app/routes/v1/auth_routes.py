@@ -90,6 +90,7 @@ async def update_event(event_id: int, event_update: EventMod):
         event.type = event_update.type
     if event_update.address is not None:
         event.address = event_update.address
+    event.update_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     events[event_index] = event
     try:
         await save_events(events)
@@ -120,6 +121,7 @@ async def create_event(event: EventMod):
     new_event_id = max((event.id for event in events), default=0) + 1
 
     event_data = event.dict()
+    event_data["update_date"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     new_event = Event(id=new_event_id, **event_data)
     events.append(new_event)
     try:
