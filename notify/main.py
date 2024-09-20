@@ -235,8 +235,7 @@ async def check_events(context: ContextTypes.DEFAULT_TYPE) -> None:
                    (user['comunidad'] == 'todas' or user['comunidad'] == event['community']) and \
                    (user['provincia'] == 'todas' or user['provincia'] == event['province']):
                     message = (
-                        "##############################\n"
-                        f"🎭 **Nuevo evento**: {event['summary']}\n"
+                        f"🎭 *{event['summary']}*\n"
                         f"📅 *Fecha de inicio*: {event['start_date']}\n"
                         f"📅 *Fecha de fin*: {event['end_date']}\n"
                         f"🌐 *Comunidad*: {event['community']}\n"
@@ -244,8 +243,7 @@ async def check_events(context: ContextTypes.DEFAULT_TYPE) -> None:
                         f"🌐 *Ciudad*: {event['city']}\n"
                         f"📍 *Dirección*: {event['address']}\n"
                         f"ℹ️ *Descripción*: {event['description']}\n"
-                        f"🏷️ *Tipo*: {event['type']}\n"
-                        "##############################"
+                        f"🏷️ *Tipo*: {event['type']}"
                     )
                     await context.bot.send_message(chat_id=user['chat_id'], text=message, parse_mode='Markdown')
                     logger.info("Nuevo evento para %s: %s", user['chat_id'], event['summary'])
