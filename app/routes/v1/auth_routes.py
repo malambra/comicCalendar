@@ -13,9 +13,11 @@ from app.auth.auth import (
     ACCESS_TOKEN_EXPIRE_MINUTES,
 )
 from app.utils.cache import reload_cached_events  # Importar desde cache.py
+import pytz
 
 router = APIRouter(prefix="/v1")
 
+madrid_tz = pytz.timezone('Europe/Madrid')
 
 @router.post("/token", description="Create new token", response_model=Token)
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
@@ -90,7 +92,9 @@ async def update_event(event_id: int, event_update: EventMod):
         event.type = event_update.type
     if event_update.address is not None:
         event.address = event_update.address
-    event.update_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    now_utc = datetime.now(pytz.utc)
+    now_madrid = now_utc.astimezone(madrid_tz)
+    event.update_date = now_madrid.strftime("%Y-%m-%d %H:%M:%S")
     events[event_index] = event
     try:
         await save_events(events)
@@ -121,7 +125,9 @@ async def create_event(event: EventMod):
     new_event_id = max((event.id for event in events), default=0) + 1
 
     event_data = event.dict()
-    event_data["update_date"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    now_utc = datetime.now(pytz.utc)
+    now_madrid = now_utc.astimezone(madrid_tz)
+    event_data["update_date"] = now_madrid.strftime("%Y-%m-%d %H:%M:%S")
     new_event = Event(id=new_event_id, **event_data)
     events.append(new_event)
     try:
