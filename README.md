@@ -377,7 +377,7 @@ python ics_to_json.py > events.json
 - [ &check; ] (app) Add data update por evento
 - [ ] (app) Permitir busqueda por summary
 - [ ] (app) Controlar duplicados
-- [ ] (app) sort por id de mayor a menos en events
+- [ &check; ] (app) sort por id de mayor a menos en events
 - [ ] (app) Notificar eventos insertados desde la web
 - [ &check; ] (app) Normalizar Comunidades y Provincias segun INE
 - [ &check; ] (app) Activar compresion en la respuesta de la api
