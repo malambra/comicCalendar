@@ -17,7 +17,8 @@ import pytz
 
 router = APIRouter(prefix="/v1")
 
-madrid_tz = pytz.timezone('Europe/Madrid')
+madrid_tz = pytz.timezone("Europe/Madrid")
+
 
 @router.post("/token", description="Create new token", response_model=Token)
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
