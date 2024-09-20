@@ -121,7 +121,7 @@ async def create_event(event: EventMod):
     new_event_id = max((event.id for event in events), default=0) + 1
 
     event_data = event.dict()
-    event_data['update_date'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    event_data["update_date"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     new_event = Event(id=new_event_id, **event_data)
     events.append(new_event)
     try:
