@@ -382,6 +382,8 @@ python ics_to_json.py > events.json
 - [ &check; ] (app) Normalizar Comunidades y Provincias segun INE
 - [ &check; ] (app) Activar compresion en la respuesta de la api
 - [ ] (app) Activar cache para las respuestas de la api
+- [ &check; ] (app) Cambios formato notificaciones.
+- [] (app) Cambios formato notificaciones - clean html.
 - [ &check; ] (app) Activar cache para la carga de los eventos de events.json
 - [ &check; ] (app) Definicion de tests unitarios con pytest
 - [ &check; ] (app) Cambio autenticacion a OAuth2
