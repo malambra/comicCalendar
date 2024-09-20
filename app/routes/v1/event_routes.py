@@ -54,6 +54,7 @@ async def read_event(event_id: int):
     tags=["events"],
 )
 async def search_events(
+    summary: str = None,
     province: str = None,
     community: str = None,
     city: str = None,
@@ -98,6 +99,13 @@ async def search_events(
             or start_date_dt
             <= datetime.fromisoformat(event.end_date).date()
             <= end_date_dt
+        ]
+    if summary:
+        normalized_summary = unidecode(summary).lower()
+        filtered_events = [
+            event
+            for event in filtered_events
+            if normalized_summary in unidecode(event.summary).lower()
         ]
     if province:
         normalized_province = unidecode(province).lower()
