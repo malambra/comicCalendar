@@ -15,14 +15,14 @@ else:  # Para correr los tests
 @router.get(
     "/events/",
     response_model=EventListResponse,
-    description="List events sorted by date.",
+    description="List events sorted by id.",
     tags=["events"],
 )
 async def read_events(
     limit: int = Query(20, ge=1, le=100), offset: int = Query(0, ge=0)
 ):
     events = await get_cached_events()
-    sorted_events = sorted(events, key=lambda event: event.start_date, reverse=True)
+    sorted_events = sorted(events, key=lambda event: event.id, reverse=True)
     total_events = len(events)
     modification_time = os.path.getmtime(events_file_path)
     last_updated = datetime.utcfromtimestamp(modification_time).isoformat() + "Z"
