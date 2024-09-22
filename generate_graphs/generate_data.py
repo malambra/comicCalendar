@@ -4,7 +4,7 @@ from collections import defaultdict
 from datetime import datetime
 
 # Construir la ruta al archivo events.json en la carpeta superior
-file_path = os.path.join(os.path.dirname(__file__), '..', 'events.json')
+file_path = os.path.join(os.path.dirname(__file__), '../comiccalendar-events', 'events.json')
 
 # Leer el archivo events.json
 with open(file_path, 'r', encoding='utf-8') as f:
@@ -21,7 +21,7 @@ for event in events:
     comunidad = event['community']
     provincia = event['province']
     tipo = event['type']
-    fecha_inicio = datetime.strptime(event['start_date'], '%Y-%m-%d %H:%M:%S%z')
+    fecha_inicio = datetime.strptime(event['start_date'], '%Y-%m-%d %H:%M:%S')
     año = fecha_inicio.year
     
     # Incrementar el total de eventos por comunidad y año
