@@ -16,6 +16,7 @@ services:
       - ./app/static:/code/app/static
       - ./.htpasswd:/code/.htpasswd
       - ./.env:/code/.env
+    restart: unless-stopped
   notify:
     container_name: notify
     image: notify
@@ -31,6 +32,7 @@ services:
       - ./auto_update/events_to_add.json:/app/events_to_add.json
       - ./notify/:/app/
       - ./.env:/app/.env
+    restart: unless-stopped
 networks:
   containers:
     external: true
