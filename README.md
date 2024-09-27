@@ -398,9 +398,10 @@ python ics_to_json.py > events.json
 - [ &check; ] (app) Graficado de información agregada de datos de eventos
 - [ &check; ] (app) No regenerar _id
 - [ &check; ] (infra) Automatizar mecanismos de obtencion y enriquecimiento de datos.
-- [ ] (infra) Gestion de backups.
+- [ &check; ] (infra) Gestion de backups.
 - [ &check; ] (infra) Añadida action linter con ruff.
 - [ &check; ] (infra) Uso de volumenes para events.json, etc...
+- [ &check; ] (infra) Añadir autorestart a los contenedores
 
 
 ## Agradecimientos
