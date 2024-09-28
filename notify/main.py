@@ -6,6 +6,8 @@ from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, CommandHandler, CallbackQueryHandler, ContextTypes
 from dotenv import load_dotenv
 
+# INITIAL SETUP
+
 # Cargar variables de entorno
 dotenv_path = os.path.join(os.path.dirname(__file__), '.', '.env')
 load_dotenv(dotenv_path)
@@ -18,14 +20,14 @@ telegram_token = os.getenv("TELEGRAM_TOKEN")
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Lista de comunidades autónomas y provincias
+# Lista de comunidades autónomas
 comunidades = [
     "Andalucía", "Cataluña", "Comunidad de Madrid", "Comunidad Valenciana", 
     "Castilla-La Mancha", "País Vasco", "Principado de Asturias", "Castilla y León", 
     "Extremadura", "Illes Balears", "Cantabria", "Galicia", "Región de Murcia", 
     "Comunidad Foral de Navarra", "Canarias", "La Rioja", "Aragón", "Ceuta", "Melilla"
 ]
-
+# Lista de provincias
 provincias = {
     "Andalucía": ["Almería", "Cádiz", "Córdoba", "Granada", "Huelva", "Jaén", "Málaga", "Sevilla"],
     "Cataluña": ["Barcelona", "Girona", "Lleida", "Tarragona"],
@@ -47,6 +49,51 @@ provincias = {
     "Ceuta": ["Ceuta"],
     "Melilla": ["Melilla"]
 }
+
+# BASIC FUNCTIONS
+
+# Función para guardar las preferencias del usuario en un archivo JSON
+def save_preferences(preferences):
+    try:
+        with open('user_preferences.json', 'r') as file:
+            data = json.load(file)
+    except FileNotFoundError:
+        data = []
+
+    data.append(preferences)
+
+    with open('user_preferences.json', 'w') as file:
+        json.dump(data, file, indent=4)
+
+def load_events_from_file(file_path):
+    with open(file_path, 'r') as file:
+        events = json.load(file)
+    return events
+
+def get_last_processed_id(events_file_path, last_id_file_path):
+    if os.path.exists(last_id_file_path):
+        with open(last_id_file_path, 'r') as file:
+            return int(file.read().strip())
+    else:
+        # Leer el archivo de eventos para obtener el mayor ID
+        try:
+            with open(events_file_path, 'r') as file:
+                events = json.load(file)
+            if events:
+                max_id = max(event['id'] for event in events)
+                save_last_processed_id(last_id_file_path, max_id)
+                return max_id
+            else:
+                return 0
+        except FileNotFoundError:
+            return 0
+
+def save_last_processed_id(file_path, last_id):
+    with open(file_path, 'w') as file:
+        file.write(str(last_id))
+
+
+# BOT FUNCTIONS
 
 # Función para iniciar el bot y solicitar preferencias
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -193,26 +240,29 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
             save_preferences(preferences)
             await query.edit_message_text(text="¡Gracias! Tus preferencias han sido guardadas.")
 
-# Función para guardar las preferencias del usuario en un archivo JSON
-def save_preferences(preferences):
-    try:
-        with open('user_preferences.json', 'r') as file:
-            data = json.load(file)
-    except FileNotFoundError:
-        data = []
-
-    data.append(preferences)
-
-    with open('user_preferences.json', 'w') as file:
-        json.dump(data, file, indent=4)
-
-# Función para revisar eventos y notificar a los usuarios
+# Función para comprobar los eventos 
 async def check_events(context: ContextTypes.DEFAULT_TYPE) -> None:
+    events_file_path = "./events.json"
+    last_id_file_path = "last_processed_id.txt"
+    
+    # Leer el último ID procesado
+    last_processed_id = get_last_processed_id(events_file_path, last_id_file_path)
+    print("############################################")
+    logger.info("Último ID procesado: %s", last_processed_id)
+    print("############################################")
+
     try:
-        with open('./events_to_add.json', 'r') as file:
+        with open(events_file_path, 'r') as file:
             events = json.load(file)
+            print("############################################")
+            logger.info("Eventos cargados correctamente.")
+            print("############################################")
     except FileNotFoundError:
         events = []
+        print("############################################")
+        logger.info("PWD: %s", os.getcwd())
+        logger.error("No se encontró el archivo de eventos.")
+        print("############################################")
 
     try:
         with open('user_preferences.json', 'r') as file:
@@ -220,39 +270,44 @@ async def check_events(context: ContextTypes.DEFAULT_TYPE) -> None:
     except FileNotFoundError:
         users = []
 
-    # Obtener la fecha de modificación del archivo events_to_add.json
-    events_file_mod_time = datetime.fromtimestamp(os.path.getmtime('events_to_add.json')).isoformat()
+    # Filtrar los eventos a partir del último ID procesado
+    new_events = [event for event in events if event['id'] > last_processed_id]
+    print("############################################")
+    logger.info("Eventos totales: %s", len(events))
+    logger.info("Nuevos eventos: %s", new_events)
+    print("############################################")
 
     for user in users:
-        if 'last_notification' not in user or events_file_mod_time > user['last_notification']:
-            for event in events:
-                if 'summary' in event:
-                    logger.info("Evento: %s", event['summary'])
-                else:
-                    logger.warning("Evento sin resumen encontrado: %s", event)
-                    continue
-                if (user['event_type'] == 'todos' or user['event_type'] == event['type']) and \
-                   (user['comunidad'] == 'todas' or user['comunidad'] == event['community']) and \
-                   (user['provincia'] == 'todas' or user['provincia'] == event['province']):
-                    message = (
-                        f"🎭 *{event['summary']}*\n"
-                        f"📅 *Fecha de inicio*: {event['start_date']}\n"
-                        f"📅 *Fecha de fin*: {event['end_date']}\n"
-                        f"🌐 *Comunidad*: {event['community']}\n"
-                        f"🌐 *Provincia*: {event['province']}\n"
-                        f"🌐 *Ciudad*: {event['city']}\n"
-                        f"📍 *Dirección*: {event['address']}\n"
-                        f"ℹ️ *Descripción*: {event['description']}\n"
-                        f"🏷️ *Tipo*: {event['type']}"
-                    )
-                    await context.bot.send_message(chat_id=user['chat_id'], text=message, parse_mode='Markdown')
-                    logger.info("Nuevo evento para %s: %s", user['chat_id'], event['summary'])
+        for event in new_events:
+            if 'summary' in event:
+                logger.info("Evento: %s", event['summary'])
+            else:
+                logger.warning("Evento sin resumen encontrado: %s", event)
+                continue
+            if (user['event_type'] == 'todos' or user['event_type'] == event['type']) and \
+               (user['comunidad'] == 'todas' or user['comunidad'] == event['community']) and \
+               (user['provincia'] == 'todas' or user['provincia'] == event['province']):
+                await notify_users(context, user, event)
 
-            # Actualizar la fecha de la última notificación
-            user['last_notification'] = events_file_mod_time
+    if new_events:
+        last_processed_id = max(event['id'] for event in new_events)
+        save_last_processed_id(last_id_file_path, last_processed_id)
 
-    with open('user_preferences.json', 'w') as file:
-        json.dump(users, file, indent=4)
+# Función para notificar a los usuarios
+async def notify_users(context, user, event):
+    message = (
+        f"🎭 *{event['summary']}*\n"
+        f"📅 *Fecha de inicio*: {event['start_date']}\n"
+        f"📅 *Fecha de fin*: {event['end_date']}\n"
+        f"🌐 *Comunidad*: {event['community']}\n"
+        f"🌐 *Provincia*: {event['province']}\n"
+        f"🌐 *Ciudad*: {event['city']}\n"
+        f"📍 *Dirección*: {event['address']}\n"
+        f"ℹ️ *Descripción*: {event['description']}\n"
+        f"🏷️ *Tipo*: {event['type']}"
+    )
+    await context.bot.send_message(chat_id=user['chat_id'], text=message, parse_mode='Markdown')
+    logger.info("Nuevo evento para %s: %s", user['chat_id'], event['summary'])
 
 # Función para devolver las preferencias del usuario
 async def check(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -279,6 +334,7 @@ async def check(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
     await update.message.reply_text(message)
 
+# Función para mostrar el mensaje de ayuda
 async def help(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     help_text = (
         "¡Hola! Aquí tienes una lista de comandos que puedes usar:\n\n"
@@ -328,6 +384,7 @@ async def set_bot_description(application) -> None:
     )
     await application.bot.set_my_description(description)
 
+# MAIN Function
 def main() -> None:
     telegram_token = os.getenv("TELEGRAM_TOKEN")
     if not telegram_token:

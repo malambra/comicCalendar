@@ -29,7 +29,7 @@ services:
       containers:
         ipv4_address: 172.21.0.11
     volumes:
-      - ./auto_update/events_to_add.json:/app/events_to_add.json
+      - ./comiccalendar-events/events.json:/app/events.json
       - ./notify/:/app/
       - ./.env:/app/.env
     restart: unless-stopped
