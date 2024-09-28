@@ -243,7 +243,7 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 # Función para comprobar los eventos 
 async def check_events(context: ContextTypes.DEFAULT_TYPE) -> None:
     events_file_path = "./events.json"
-    last_id_file_path = "last_processed_id.txt"
+    last_id_file_path = "../app2/last_processed_id.txt"
     
     # Leer el último ID procesado
     last_processed_id = get_last_processed_id(events_file_path, last_id_file_path)
