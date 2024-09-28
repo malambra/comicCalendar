@@ -30,6 +30,7 @@ services:
         ipv4_address: 172.21.0.11
     volumes:
       - ./comiccalendar-events/events.json:/app/events.json
+      - ./notify-last-id/last_processed_id.txt:/app/last_processed_id.txt
       - ./notify/:/app/
       - ./.env:/app/.env
     restart: unless-stopped
@@ -38,4 +39,6 @@ networks:
     external: true
 volumes:
   comiccalendar-events:
+    external: false
+  notify-last-id:
     external: false
