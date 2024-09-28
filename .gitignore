@@ -167,3 +167,6 @@ cython_debug/
 **/events_to_add.json
 **/events.json
 **/user_preferences.json
+
+#Notify
+**/last_processed_id.txt
