@@ -2,7 +2,7 @@ import json
 import logging
 import os
 from datetime import datetime
-from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, BotCommand
 from telegram.ext import Application, CommandHandler, CallbackQueryHandler, ContextTypes
 from dotenv import load_dotenv
 
@@ -384,6 +384,17 @@ async def set_bot_description(application) -> None:
     )
     await application.bot.set_my_description(description)
 
+async def set_bot_commands(application) -> None:
+    commands = [
+        BotCommand("start", "Iniciar el bot y añadir nuevas preferencias"),
+        BotCommand("check", "Listar tus preferencias actuales"),
+        BotCommand("delete", "Eliminar una preferencia específica"),
+        BotCommand("clean", "Eliminar todas tus preferencias"),
+        BotCommand("about", "Mostrar información sobre el bot"),
+        BotCommand("help", "Mostrar este mensaje de ayuda")
+    ]
+    await application.bot.set_my_commands(commands)
+
 # MAIN Function
 def main() -> None:
     telegram_token = os.getenv("TELEGRAM_TOKEN")
@@ -405,6 +416,9 @@ def main() -> None:
     
     # Establecer la descripción del bot
     application.job_queue.run_once(set_bot_description, 0)
+
+    # Establecer los comandos del bot
+    application.job_queue.run_once(set_bot_commands, 0)
 
     application.run_polling()
 
