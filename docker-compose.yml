@@ -37,8 +37,3 @@ services:
 networks:
   containers:
     external: true
-volumes:
-  comiccalendar-events:
-    external: false
-  notify-last-id:
-    external: false
