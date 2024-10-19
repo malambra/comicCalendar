@@ -65,6 +65,8 @@ def crear_grafica_con_dropdown(data, title, filename):
         title=title,
         xaxis_title='Año',
         yaxis_title='Número de Eventos',
+        plot_bgcolor='white',
+        paper_bgcolor='#f8f9fa',
         height=600,
         updatemenus=[
             {
@@ -77,6 +79,22 @@ def crear_grafica_con_dropdown(data, title, filename):
                 'yanchor': 'top'
             }
         ]
+    )
+
+    fig.update_xaxes(
+        mirror=True,
+        ticks='outside',
+        showline=True,
+        linecolor='black',
+        gridcolor='lightgrey'
+    )
+
+    fig.update_yaxes(
+        mirror=True,
+        ticks='outside',
+        showline=True,
+        linecolor='black',
+        gridcolor='lightgrey'
     )
 
     # Construir la ruta de salida
