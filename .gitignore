@@ -157,6 +157,8 @@ cython_debug/
 
 # Graficas
 /static/graphs/
+**/events_by_year.json
+/app/static/
 
 #Auto update
 **/basic.ics

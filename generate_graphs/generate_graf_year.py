@@ -55,10 +55,30 @@ def crear_graficas_html(año, datos):
     # Layout de la figura
     fig.update_layout(
         title_text=f'Análisis de Eventos en {año}',
+        #title_font_color='blue',  # Cambiar el color de la letra del título
+        #title_font=dict(size=24, color='blue'),  # Cambiar el tamaño y color de la letra del título
+        plot_bgcolor='white',
+        paper_bgcolor='#f8f9fa',
         showlegend=False,
         height=800,
     )
     
+    fig.update_xaxes(
+        mirror=True,
+        ticks='outside',
+        showline=True,
+        linecolor='black',
+        gridcolor='lightgrey'
+    )
+
+    fig.update_yaxes(
+        mirror=True,
+        ticks='outside',
+        showline=True,
+        linecolor='black',
+        gridcolor='lightgrey'
+    )
+
     # Construir la ruta de salida
     output_path = os.path.join(os.path.dirname(__file__), '..', 'app', 'static', 'graphs', f'graficas_eventos_{año}.html')
     fig.write_html(output_path)
