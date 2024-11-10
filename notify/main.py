@@ -309,7 +309,7 @@ async def notify_users(context, user, event):
             f"🔗 [Link](https://eventoscomic.com/?id={event['id']})"
         )
         logger.info("Mensaje a enviar: %s", message)
-        logger.info("Enviando Nuevo evento para %s: ID:%s Summary: %s", user['chat_id'], event['summary'])
+        logger.info("Enviando Nuevo evento para %s: Summary: %s", user['chat_id'], event['summary'])
         await context.bot.send_message(chat_id=user['chat_id'], text=message, parse_mode='Markdown')
         logger.info("Envio OK evento para %s: %s", user['chat_id'], event['summary'])
     except Exception as e:
