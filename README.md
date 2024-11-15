@@ -6,22 +6,22 @@ El proyecto nace de la necesidad de un "friki", de tener un punto centralizado e
 
 Si tienes esta misma necesidad, aparte de ser otro "friki", eres libre de usar el código o la **API** como consideres, dentro de los términos publicados en [términos](terms.md)
 
-Si quieres disfrutar de tus eventos sin complicarte, te sigiero que uses la web de [https://eventoscomic.com](https://eventoscomic.com)
+Si quieres disfrutar de tus eventos sin complicarte, te sigiero que uses la web de [https://comicplan.com](https://comicplan.com)
 
 #### API
-- URL de la **API** está disponible en: https://api.eventoscomic.com
+- URL de la **API** está disponible en: https://api.comicplan.com
 
-- Documentación de la **API**: https://api.eventoscomic.com/docs
+- Documentación de la **API**: https://api.comicplan.com/docs
 
 - Repositorio **Github**: https://github.com/malambra/comicCalendar
 
 #### FRONT
-- URL en producción:  https://eventoscomic.com
+- URL en producción:  https://comicplan.com
 
 - Repositorio **Github**: https://github.com/Raixs/ComicCalendarWeb
 
 ## Características
-La **API** se auto explica en su [documentación](https://api.eventoscomic.com/docs)
+La **API** se auto explica en su [documentación](https://api.comicplan.com/docs)
 
 Las funcionalidades más destacadas son:
 - Listado ordenado por fecha

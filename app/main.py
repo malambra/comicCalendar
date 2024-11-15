@@ -59,7 +59,7 @@ async def root():
             <a href="/docs" style="text-decoration: none; color: #ffcc00;">/docs</a>
         </p>
         <p>To access web 
-            <a href="https://eventoscomic.com" style="text-decoration: none; color: #ffcc00;">https://eventoscomic.com</a>
+            <a href="https://comicplan.com" style="text-decoration: none; color: #ffcc00;">https://comicplan.com</a>
         </p>
         <br>
         <a href="https://github.com/malambra/comicCalendar" target="_blank">
