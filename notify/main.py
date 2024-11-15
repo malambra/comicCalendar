@@ -306,7 +306,7 @@ async def notify_users(context, user, event):
             f"🌐 *Ciudad*: {html.escape(event['city'])}\n"
             f"📍 *Dirección*: {html.escape(event['address'])}\n"
             f"🏷️ *Tipo*: {html.escape(event['type'])}\n"
-            f"🔗 [Link](https://eventoscomic.com/?id={event['id']})"
+            f"🔗 [Link](https://comicplan.com/?id={event['id']})"
         )
         logger.info("Mensaje a enviar: %s", message)
         logger.info("Enviando Nuevo evento para %s: Summary: %s", user['chat_id'], event['summary'])
@@ -377,8 +377,8 @@ async def about(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         "👤 **Autor**: Manuel Alambra [@malambra](https://github.com/malambra)\n"
         "🔗 **Repositorio Backend**: [GitHub](https://github.com/malambra/comicCalendar)\n"
         "🔗 **Repositorio Frontend**: [GitHub](https://github.com/Raixs/ComicCalendarWeb)\n"
-        "🌐 **Web**: [https://eventoscomic.com](https://eventoscomic.com/)\n"
-        "🌐 **API**: [https://api.eventoscomic.com/docs](https://api.eventoscomic.com/docs)\n"
+        "🌐 **Web**: [https://comicplan.com](https://comicplan.com/)\n"
+        "🌐 **API**: [https://api.comicplan.com/docs](https://api.comicplan.com/docs)\n"
     )
     await update.message.reply_text(about_text, parse_mode='Markdown')
 
