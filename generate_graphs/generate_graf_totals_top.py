@@ -66,7 +66,7 @@ def crear_grafica_con_dropdown(data, title, filename):
         xaxis_title='Año',
         yaxis_title='Número de Eventos',
         plot_bgcolor='white',
-        paper_bgcolor='#f8f9fa',
+        paper_bgcolor='#ffffff',
         height=600,
         updatemenus=[
             {

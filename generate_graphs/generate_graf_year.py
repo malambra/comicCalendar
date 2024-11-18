@@ -58,7 +58,7 @@ def crear_graficas_html(año, datos):
         #title_font_color='blue',  # Cambiar el color de la letra del título
         #title_font=dict(size=24, color='blue'),  # Cambiar el tamaño y color de la letra del título
         plot_bgcolor='white',
-        paper_bgcolor='#f8f9fa',
+        paper_bgcolor='#ffffff',
         showlegend=False,
         height=800,
     )
