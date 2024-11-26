@@ -202,7 +202,8 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         context.user_data['comunidad'] = comunidad
 
         # Preguntar por la provincia
-        keyboard = [[InlineKeyboardButton(provincia, callback_data=f'provincia_{provincia}')] for provincia in provincias[comunidad]]
+        keyboard = [[InlineKeyboardButton("Todas", callback_data=f'provincia_Todas')]]
+        keyboard += [[InlineKeyboardButton(provincia, callback_data=f'provincia_{provincia}')] for provincia in provincias[comunidad]]
         reply_markup = InlineKeyboardMarkup(keyboard)
         await query.edit_message_text(text="¿De qué provincia deseas recibir notificaciones?", reply_markup=reply_markup)
 
