@@ -156,7 +156,7 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         context.user_data['delete_comunidad'] = comunidad
 
         # Preguntar por la provincia
-        keyboard = [[InlineKeyboardButton("Todas", callback_data='delete_provincia_todas')]]  # Añadir opción "Todas"
+        keyboard = [[InlineKeyboardButton("Todas", callback_data='delete_provincia_Todas')]]  # Añadir opción "Todas"
         keyboard += [[InlineKeyboardButton(provincia, callback_data=f'delete_provincia_{provincia}')] for provincia in provincias[comunidad]]
         reply_markup = InlineKeyboardMarkup(keyboard)
         await query.edit_message_text(text="¿De qué provincia deseas eliminar la preferencia?", reply_markup=reply_markup)
