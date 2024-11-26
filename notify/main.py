@@ -155,10 +155,11 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         comunidad = query.data.split('_')[2]
         context.user_data['delete_comunidad'] = comunidad
 
-        # Preguntar por la provincia
-        keyboard = [[InlineKeyboardButton(provincia, callback_data=f'delete_provincia_{provincia}')] for provincia in provincias[comunidad]]
-        reply_markup = InlineKeyboardMarkup(keyboard)
-        await query.edit_message_text(text="¿De qué provincia deseas eliminar la preferencia?", reply_markup=reply_markup)
+    # Preguntar por la provincia
+    keyboard = [[InlineKeyboardButton("Todas", callback_data='delete_provincia_todas')]]  # Añadir opción "Todas"
+    keyboard += [[InlineKeyboardButton(provincia, callback_data=f'delete_provincia_{provincia}')] for provincia in provincias[comunidad]]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    await query.edit_message_text(text="¿De qué provincia deseas eliminar la preferencia?", reply_markup=reply_markup)
 
     # Manejar la respuesta de la provincia para eliminación
     elif query.data.startswith('delete_provincia_'):
@@ -287,7 +288,7 @@ async def check_events(context: ContextTypes.DEFAULT_TYPE) -> None:
                 continue
             if (user['event_type'] == 'todos' or user['event_type'] == event['type']) and \
                (user['comunidad'] == 'todas' or user['comunidad'] == event['community']) and \
-               (user['provincia'] == 'todas' or user['provincia'] == event['province']):
+               (user['provincia'] == 'Todas' or user['provincia'] == event['province']):
                 await notify_users(context, user, event)
 
     if new_events:
