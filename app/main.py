@@ -20,12 +20,9 @@ app = FastAPI(
         "email": "alambra.manolo@gmail.com",
     },
     license_info={"name": "MIT", "url": "https://opensource.org/licenses/MIT"},
-    swagger_ui_parameters={
-        "favicon32": "https://api.comicplan.com/favicon.ico",
-        "favicon16": "https://api.comicplan.com/favicon.ico",
-    },
-    redoc_url="/redoc",
 )
+
+
 ## Lista de dominios permitidos
 # origins = [
 #    "http://localhost:3000",  # Ejemplo de dominio permitido
