@@ -47,6 +47,10 @@ app.add_middleware(
 
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
+# Ruta para servir el favicon
+@app.get("/favicon.ico", include_in_schema=False)
+async def favicon():
+    return FileResponse("app/static/FAVICON.png")
 
 # Ruta para servir un solo fichero estático
 @app.get("/static-events", include_in_schema=False)
