@@ -61,20 +61,27 @@ async def static_file():
 @app.get("/", include_in_schema=False, response_class=HTMLResponse)
 async def root():
     message = """
-    <div style="text-align: center; font-family: Arial, sans-serif; color: #f5f5f5; background-color: #1a1a2e; padding: 20px; border-radius: 10px;">
-        <h2 style="color: #ffcc00;">Welcome to Comic Calendar API</h2>
-        <p>The default version is <strong>v1</strong></p>
-        <p>To read the documentation 
-            <a href="/docs" style="text-decoration: none; color: #ffcc00;">/docs</a>
-        </p>
-        <p>To access web 
-            <a href="https://comicplan.com" style="text-decoration: none; color: #ffcc00;">https://comicplan.com</a>
-        </p>
-        <br>
-        <a href="https://github.com/malambra/comicCalendar" target="_blank">
-        <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub" width="30" height="30" style="border-radius: 50%;"> 
-        </a>
-    </div>
+    <html>
+    <head>
+        <link rel="icon" type="image/png" href="/favicon.ico">
+    </head>
+    <body>
+        <div style="text-align: center; font-family: Arial, sans-serif; color: #f5f5f5; background-color: #1a1a2e; padding: 20px; border-radius: 10px;">
+            <h2 style="color: #ffcc00;">Welcome to Comic Calendar API</h2>
+            <p>The default version is <strong>v1</strong></p>
+            <p>To read the documentation 
+                <a href="/docs" style="text-decoration: none; color: #ffcc00;">/docs</a>
+            </p>
+            <p>To access web 
+                <a href="https://comicplan.com" style="text-decoration: none; color: #ffcc00;">https://comicplan.com</a>
+            </p>
+            <br>
+            <a href="https://github.com/malambra/comicCalendar" target="_blank">
+            <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub" width="30" height="30" style="border-radius: 50%;"> 
+            </a>
+        </div>
+    </body>
+    </html>
     """
     formatted_message = textwrap.dedent(message).replace("\n", "<br>")
     return formatted_message
