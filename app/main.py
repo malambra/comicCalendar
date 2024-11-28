@@ -20,7 +20,10 @@ app = FastAPI(
         "email": "alambra.manolo@gmail.com",
     },
     license_info={"name": "MIT", "url": "https://opensource.org/licenses/MIT"},
-    swagger_ui_parameters={"favicon32": "/static/FAVICON.png", "favicon16": "/static/FAVICON.png"},
+    swagger_ui_parameters={
+        "favicon32": "/static/FAVICON.png",
+        "favicon16": "/static/FAVICON.png",
+    },
     redoc_url="/redoc",
 )
 ## Lista de dominios permitidos
@@ -49,7 +52,6 @@ app.mount("/static", StaticFiles(directory="app/static"), name="static")
 @app.get("/static-events", include_in_schema=False)
 async def static_file():
     return FileResponse("events.json")
-
 
 
 @app.get("/", include_in_schema=False, response_class=HTMLResponse)
