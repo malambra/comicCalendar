@@ -26,7 +26,7 @@ comunidades = [
     "Andalucía", "Cataluña", "Comunidad de Madrid", "Comunidad Valenciana", 
     "Castilla-La Mancha", "País Vasco", "Principado de Asturias", "Castilla y León", 
     "Extremadura", "Illes Balears", "Cantabria", "Galicia", "Región de Murcia", 
-    "Comunidad Foral de Navarra", "Canarias", "La Rioja", "Aragón", "Ceuta", "Melilla"
+    "Comunidad Foral de Navarra", "Canarias", "La Rioja", "Aragón", "Ceuta", "Nacional", "Melilla"
 ]
 # Lista de provincias
 provincias = {
@@ -48,6 +48,7 @@ provincias = {
     "La Rioja": ["La Rioja"],
     "Aragón": ["Huesca", "Teruel", "Zaragoza"],
     "Ceuta": ["Ceuta"],
+    "Nacional": ["Nacional"],
     "Melilla": ["Melilla"]
 }
 
