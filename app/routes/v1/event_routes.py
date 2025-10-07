@@ -78,8 +78,7 @@ async def search_events(
         filtered_events = [
             event
             for event in filtered_events
-            if create_date_dt 
-            <= datetime.fromisoformat(event.create_date).date()
+            if create_date_dt <= datetime.fromisoformat(event.create_date).date()
         ]
 
     if start_date or end_date:
