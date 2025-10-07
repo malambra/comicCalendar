@@ -28,6 +28,7 @@ def parse_ics(file_path):
                 "summary": str(component.get('SUMMARY')),
                 "start_date": str(start_date),
                 "end_date": str(end_date) if end_date else None,
+                "create_date": str(component.get("CREATED").dt if component.get("CREATED") else datetime.datetime.now(pytz.utc)),
                 "address": str(component.get('LOCATION')),
                 "description": str(component.get('DESCRIPTION')),
                 "type": get_type(str(component.get('DESCRIPTION')))

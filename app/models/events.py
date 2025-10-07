@@ -8,6 +8,7 @@ class Event(BaseModel):
     summary: str
     start_date: str
     end_date: str
+    create_date: str
     update_date: str
     province: str
     community: str
@@ -21,6 +22,7 @@ class EventMod(BaseModel):
     summary: Optional[str] = None
     start_date: Optional[str] = None
     end_date: Optional[str] = None
+    create_date: Optional[str] = None
     update_date: Optional[str] = None
     province: Optional[str] = None
     community: Optional[str] = None

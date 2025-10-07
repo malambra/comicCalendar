@@ -128,6 +128,7 @@ async def create_event(event: EventMod):
     event_data = event.dict()
     now_utc = datetime.now(pytz.utc)
     now_madrid = now_utc.astimezone(madrid_tz)
+    event_data["create_date"] = now_madrid.strftime("%Y-%m-%d %H:%M:%S")
     event_data["update_date"] = now_madrid.strftime("%Y-%m-%d %H:%M:%S")
     new_event = Event(id=new_event_id, **event_data)
     events.append(new_event)

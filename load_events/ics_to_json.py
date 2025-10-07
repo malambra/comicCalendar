@@ -77,6 +77,8 @@ def ics_to_json(ics_file):
 
             start_dt = component.get("dtstart").dt
             end_dt = component.get("dtend")
+            create_dt = component.get("created").dt if component.get("created") else datetime.datetime.now(pytz.utc)
+
 
             # Manejar tanto datetime.date como datetime.datetime
             if isinstance(start_dt, datetime.date):
@@ -105,6 +107,7 @@ def ics_to_json(ics_file):
                 "summary": summary,
                 "start_date": start_date,
                 "end_date": end_date,
+                "create_date": str(create_dt.date()),
                 "province": province,
                 "address": location,
                 "description": description,
