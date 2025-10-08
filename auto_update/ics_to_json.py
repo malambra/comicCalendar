@@ -48,10 +48,15 @@ def ics_to_json(ics_file):
 
             start_dt = component.get("dtstart").dt
             end_dt = component.get("dtend")
+            create_dt = component.get("created").dt if component.get("created") else datetime.datetime.now(pytz.utc)
 
             # Convertir start_dt a la zona horaria de Madrid
             start_dt = convert_to_madrid_tz(start_dt)
             start_date = start_dt.strftime("%Y-%m-%d %H:%M:%S")
+
+            # Convertir create_dt a la zona horaria de Madrid
+            create_dt = convert_to_madrid_tz(create_dt)
+            create_date = create_dt.strftime("%Y-%m-%d %H:%M:%S")
 
             if end_dt is not None:
                 # Convertir end_dt a la zona horaria de Madrid
@@ -74,6 +79,7 @@ def ics_to_json(ics_file):
                 "summary": summary,
                 "start_date": start_date,
                 "end_date": end_date,
+                "create_date": create_date,
                 "province": province,
                 "address": location,
                 "description": description,

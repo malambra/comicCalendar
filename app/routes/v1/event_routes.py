@@ -61,11 +61,25 @@ async def search_events(
     type: str = None,
     start_date: str = Query(None, description="Format: YYYY-MM-DD"),
     end_date: str = Query(None, description="Format: YYYY-MM-DD"),
+    create_date: str = Query(None, description="Format: YYYY-MM-DD"),
     limit: int = Query(20, ge=1, le=100),
     offset: int = Query(0, ge=0),
 ):
     events = await get_cached_events()
     filtered_events = events
+
+    if create_date:
+        try:
+            create_date_dt = datetime.fromisoformat(create_date).date()
+        except ValueError:
+            raise HTTPException(
+                status_code=400, detail="Invalid create_date format. Use YYYY-MM-DD."
+            )
+        filtered_events = [
+            event
+            for event in filtered_events
+            if create_date_dt <= datetime.fromisoformat(event.create_date).date()
+        ]
 
     if start_date or end_date:
         if not start_date or not end_date:

@@ -28,6 +28,7 @@ def add_time_if_missing(date_str, is_start):
 for event in events:
     event['start_date'] = add_time_if_missing(event.get('start_date'), is_start=True)
     event['end_date'] = add_time_if_missing(event.get('end_date'), is_start=False)
+    event['create_date'] = add_time_if_missing(event.get('create_date'), is_start=True)
 
 # Guardar el archivo JSON modificado
 with open(args.output_file, 'w', encoding='utf-8') as file:
