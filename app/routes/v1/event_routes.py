@@ -11,6 +11,7 @@ if os.path.exists("/code/events.json"):
 else:  # Para correr los tests
     events_file_path = "events.json"
 
+
 def parse_datetime_or_date(value: str) -> datetime:
     """Permite formatos YYYY-MM-DD o YYYY-MM-DD HH:MM:SS"""
     # Start with most complete format
@@ -27,6 +28,7 @@ def parse_datetime_or_date(value: str) -> datetime:
         status_code=400,
         detail="Invalid date format. Use YYYY-MM-DD or YYYY-MM-DD HH:MM:SS.",
     )
+
 
 @router.get(
     "/events/",
@@ -77,7 +79,10 @@ async def search_events(
     type: str = None,
     start_date: str = Query(None, description="Format: YYYY-MM-DD"),
     end_date: str = Query(None, description="Format: YYYY-MM-DD"),
-    create_date: str = Query(None, description="Format: YYYY-MM-DD or YYYY-MM-DD HH:MM:SS (defaults to 00:00:00 if time not specified)"),
+    create_date: str = Query(
+        None,
+        description="Format: YYYY-MM-DD or YYYY-MM-DD HH:MM:SS (defaults to 00:00:00 if time not specified)",
+    ),
     limit: int = Query(20, ge=1, le=100),
     offset: int = Query(0, ge=0),
 ):
@@ -88,8 +93,10 @@ async def search_events(
     if create_date:
         create_date_dt = parse_datetime_or_date(create_date)
         filtered_events = [
-            event for event in filtered_events
-            if create_date_dt <= datetime.fromisoformat(event.create_date.replace("Z", ""))
+            event
+            for event in filtered_events
+            if create_date_dt
+            <= datetime.fromisoformat(event.create_date.replace("Z", ""))
         ]
     # --- Filtrar por rango de fechas ---
     if start_date or end_date:
