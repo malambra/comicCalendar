@@ -172,3 +172,7 @@ cython_debug/
 
 #Notify
 **/last_processed_id.txt
+
+#Otros
+.DS_Store
+
