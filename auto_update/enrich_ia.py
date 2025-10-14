@@ -19,8 +19,34 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 
 def get_type(description):
     messages = [
-        {"role": "system", "content": "You are a helpful assistant."},
-        {"role": "user", "content": f"Determina si el siguiente evento es una 'Firma' (charlas o sesiones de firmas) o un 'Evento' (eventos grandes tipo salón) basada en su descripción:\n\n{description}\n\nProporciona el resultado en el formato JSON con el campo 'type'."}
+        {
+            "role": "system",
+            "content": (
+                "Eres un asistente experto en eventos relacionados con el mundo del cómic. "
+                "Tu tarea es analizar descripciones de eventos y clasificarlos con precisión "
+                "en una de las siguientes categorías, devolviendo el resultado en formato JSON "
+                "con un solo campo 'type'."
+            ),
+        },
+        {
+            "role": "user",
+            "content": (
+                "Clasifica el siguiente evento de cómic en una de estas categorías:\n\n"
+                "1. **Convención**: Grandes eventos o salones dedicados al cómic, manga o cultura pop "
+                "(por ejemplo: Salón del Cómic, Comic-Con, Japan Weekend).\n"
+                "2. **Feria**: Eventos de venta o intercambio de cómics, fanzines o merchandising, "
+                "normalmente con puestos o stands comerciales.\n"
+                "3. **Firma**: Sesión de firmas o encuentro con autores/as donde firman ejemplares de sus obras.\n"
+                "4. **Presentación**: Acto formal en el que se presenta una obra, cómic o libro, generalmente con los autores presentes.\n"
+                "5. **Taller**: Actividad formativa o práctica (por ejemplo, dibujo, guion, ilustración, creación de cómics, etc.).\n"
+                "6. **Exposición**: Muestra artística o exhibición de obras relacionadas con el cómic (originales, ilustraciones, etc.).\n"
+                "7. **Otros**: Cualquier evento que no encaje claramente en las categorías anteriores.\n\n"
+                "Devuelve únicamente un JSON con el formato:\n"
+                "{ \"type\": \"<categoría>\" }\n\n"
+                "Descripción del evento:\n"
+                f"{description}"
+            ),
+        },
     ]
 
     retries = 5
@@ -29,7 +55,8 @@ def get_type(description):
             response = openai.ChatCompletion.create(
                 model="gpt-3.5-turbo",
                 messages=messages,
-                max_tokens=50,
+                max_tokens=60,
+                temperature=0.2,
             )
             resultado = response['choices'][0]['message']['content'].strip()
             print(f"Respuesta de la API (get_type): {resultado}")  # Mensaje de depuración
