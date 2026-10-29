@@ -54,8 +54,10 @@ def get_type(description):
     for i in range(retries):
         try:
             response = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo",
+                #DEPRECATED#model="gpt-3.5-turbo",
+                model="gpt-4o-mini",
                 messages=messages,
+                response_format={"type": "json_object"},
                 max_tokens=60,
                 temperature=0.2,
             )
@@ -85,8 +87,10 @@ def get_location_info(address):
     for i in range(retries):
         try:
             response = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo",
+                #DEPRECATED#model="gpt-3.5-turbo",
+                model="gpt-4o-mini",
                 messages=messages,
+                response_format={"type": "json_object"},
                 max_tokens=50,
             )
             resultado = response['choices'][0]['message']['content'].strip()
