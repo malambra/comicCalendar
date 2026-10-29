@@ -55,11 +55,12 @@ def get_type(description):
         try:
             response = openai.ChatCompletion.create(
                 #DEPRECATED#model="gpt-3.5-turbo",
-                model="gpt-4o-mini",
+                model="gpt-6-luna",
                 messages=messages,
                 response_format={"type": "json_object"},
-                max_tokens=60,
+                max_completion_tokens=60,
                 temperature=0.2,
+                reasoning_effort="none",
             )
             resultado = response['choices'][0]['message']['content'].strip()
             print(f"Respuesta de la API (get_type): {resultado}")  # Mensaje de depuración
@@ -88,10 +89,11 @@ def get_location_info(address):
         try:
             response = openai.ChatCompletion.create(
                 #DEPRECATED#model="gpt-3.5-turbo",
-                model="gpt-4o-mini",
+                model="gpt-6-luna",
                 messages=messages,
                 response_format={"type": "json_object"},
-                max_tokens=50,
+                max_completion_tokens=100,
+                reasoning_effort="none",
             )
             resultado = response['choices'][0]['message']['content'].strip()
             print(f"Respuesta de la API (get_location_info): {resultado}")  # Mensaje de depuración
